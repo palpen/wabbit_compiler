@@ -73,6 +73,7 @@ on the wiki.   Reposted here.
 * [Warmup Exercises](docs/Warmup-Exercises.md)
 * [Recursion Exercises](docs/Recursion-Exercises.md)
 * [Project 0 - The Metal](docs/Project0_The_Metal.md)
+* [Project 0.25 - The Mental](docs/Project0_25_The_Mental.md)
 * [Project 0.5 - SillyWabbit](docs/Project0_5_SillyWabbit.md)
 
 ## Resources

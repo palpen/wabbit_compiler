@@ -18,6 +18,7 @@ fix small typos.
 ### Preliminaries
 
 * [Project 0 - The Metal](Project0_The_Metal.md)
+* [Project 0.25 - The Mental](Project0_25_The_Mental.md)
 * [Project 0.5 - SillyWabbit](Project0_5_SillyWabbit.md)
 
 ### WabbitScript
