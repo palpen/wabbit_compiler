@@ -1,6 +1,6 @@
 # Project 9 - Generating WebAssembly
 
-As an alternative to LLVM, you can compile WabbitScript to WebAssembly.  Before going any further, complete the [WebAssembly Tutorial](https://github.com/dabeaz/compilers_2020_05/wiki/WebAssembly-Tutorial).
+As an alternative to LLVM, you can compile WabbitScript to WebAssembly.  Before going any further, complete the [WebAssembly Tutorial](WebAssembly-Tutorial.md).
 
 Once you have completed the tutorial, go to the file `wabbit/wasm.py` and follow the instructions inside.
 

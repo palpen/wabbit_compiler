@@ -1,11 +1,11 @@
 # Project 11 - Types! Types! Types!
 
-In this project, you extend WabbitFunc to [WabbitType](https://github.com/dabeaz/compilers_2020_05/wiki/WabbitType-Specification).  This is the full Wabbit Language.
+In this project, you extend WabbitFunc to [WabbitType](WabbitType-Specification).  This is the full Wabbit Language.
 
 In a nutshell, you are extending Wabbit to have user-defined structure and enum types.  Virtually every part of the compiler will need to be modified.  The type-checker is going to become a lot more complicated. You are going to face a lot of challenges in code generation related to mapping user-defined types to structures in LLVM and WebAssembly.  You will definitely want to consult the knowledge base.  For example:
 
-* [Generating Structures in LLVM](https://github.com/dabeaz/compilers_2020_05/wiki/WabbitType-Specification)
-* [Generating Code for Enums](https://github.com/dabeaz/compilers_2020_05/wiki/Generating-Code-for-Enums)
+* [Generating Structures in LLVM](LLVM-Structures.md)
+* [Generating Code for Enums](Generating-Code-for-Enums.md)
 
 ## Testing
 

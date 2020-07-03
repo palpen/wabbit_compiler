@@ -1,6 +1,6 @@
 # WabbitFunc
 
-WabbitFunc is an extension of [WabbitScript](https://github.com/dabeaz/compilers_2020_05/wiki/WabbitScript) that adds the
+WabbitFunc is an extension of [WabbitScript](WabbitScript.md) that adds the
 ability to define functions.  In a nutshell, you can now write code like this:
 
 ```

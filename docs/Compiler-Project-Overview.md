@@ -152,5 +152,5 @@ Refer to the file `test.html` to see how it's done.
 
 ## Wabbit Language Reference
 
-[Wabbit Language Reference](https://github.com/dabeaz/compilers_2020_05/wiki/Wabbit-Specification) contains an official specification for the language.
+[Wabbit Language Reference](Wabbit-Specification.md) contains an official specification for the language.
 

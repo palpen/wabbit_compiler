@@ -1,10 +1,8 @@
 # WabbitType Specification
 
 WabbitType is a full implementation of the Wabbit language.  It has
-all of the features of
-[WabbitFunc](https://github.com/dabeaz/compilers_2020_05/wiki/WabbitFunc)
-plus the ability to define user-defined types.  Type-casts and
-conversions are also added.
+all of the features of [WabbitFunc](WabbitFunc.md) plus the ability to
+define user-defined types.  Type-casts and conversions are also added.
 
 Here are the main features added in WabbitType:
 
@@ -74,9 +72,13 @@ while let Yes(x) = a {
 
 ## Implementation Notes
 
-Implementing user-defined types is difficult.  Don't even attempt it unless you have WabbitFunc working first.  You will need to modify almost every part of the compiler.  Here are some critical components:
+Implementing user-defined types is difficult.  Don't even attempt it
+unless you have WabbitFunc working first.  You will need to modify
+almost every part of the compiler.  Here are some critical components:
 
-* You need to define `struct` and `enum` objects that represent these definitions.  These objects are containers for other objects that represent structure fields and enum choices.
+* You need to define `struct` and `enum` objects that represent these
+  definitions.  These objects are containers for other objects that
+  represent structure fields and enum choices.
 
 * You need to support type-conversions and type construction.  This looks (syntactically) the same as a function call.  For example, to create a `Fraction` above, you write `Fraction(2, 3)`.  Or, to convert a value to a `float`, you write `float(x)`.   So, somehow you need to know that these operations are related to type construction as opposed to calling an ordinary function (although there are still many similarities).
 

@@ -1,12 +1,16 @@
 # Project 3 - Tokenizing
 
-This project starts the process of building a parser that can take [WabbitScript](https://github.com/dabeaz/compilers_2020_05/wiki/WabbitScript) source text and turn it into the data model you created in Project 1.  
+This project starts the process of building a parser that can take
+[WabbitScript](WabbitScript.md) source text and turn it into the data
+model you created in Project 1.
 
 Go to the file `wabbit/tokenize.py` and follow the instructions inside.
 
 ## Testing
 
-Once you have written a tokenizer, you should be able to test it on some sample input programs in the `tests/Script/` directory.  For example:
+Once you have written a tokenizer, you should be able to test it on
+some sample input programs in the `tests/Script/` directory.  For
+example:
 
 ```
 bash $ cat tests/Script/fact.wb

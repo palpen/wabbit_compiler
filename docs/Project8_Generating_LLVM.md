@@ -1,13 +1,14 @@
 # Project 8 - Generating LLVM
 
-It's time to take WabbitScript and turn it into LLVM.  Before proceeding, you need to work through the [LLVM Tutorial](https://github.com/dabeaz/compilers_2020_05/wiki/LLVM-Tutorial). 
+It's time to take WabbitScript and turn it into LLVM.  Before proceeding, you need to work through the [LLVM Tutorial](LLVM-Tutorial.md). 
 
 Once you have completed the tutorial, go to the file `wabbit/llvm.py` and follow the instructions inside.
 
 ## Testing
 
-To test this part of the project, you should be able to take any of the scripts in `test/Script/` and turn it into
-LLVM output.  It might look like this:
+To test this part of the project, you should be able to take any of
+the scripts in `test/Script/` and turn it into LLVM output.  It might
+look like this:
 
 ```
 bash $ python3 -m wabbit.llvm test/Script/fact.wb
@@ -53,7 +54,9 @@ exit:
 bash $
 ```
 
-If you save this output to a file, you can compile it with the `clang` compiler as long you as you also include the required runtime functions (see below).  For example:
+If you save this output to a file, you can compile it with the `clang`
+compiler as long you as you also include the required runtime
+functions (see below).  For example:
 
 ```
 bash $ python3 -m wabbit.llvm tests/Script/fact.wb >out.ll
@@ -73,7 +76,8 @@ bash $
 
 ## Runtime Library
 
-To perform printing, you'll want to include a small C library of print functions. For example:
+To perform printing, you'll want to include a small C library of print
+functions. For example:
 
 ```
 /* runtime.c */
