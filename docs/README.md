@@ -6,12 +6,12 @@ subject to frequent change). Submit questions as issues. Feel free to
 fix small typos.
 
 * [Project Overview](Compiler-Project-Overview.md)
-* The [Wabbit Specification](Wabbit-Specification)
+* The [Wabbit Specification](Wabbit-Specification.md)
 
 ## Preparation Exercises (Coding Practice)
 
-* [Warmup Exercises](Warmup-Exercises)
-* [Recursion Exercises](Recursion-Exercises)
+* [Warmup Exercises](Warmup-Exercises.md)
+* [Recursion Exercises](Recursion-Exercises.md)
 
 ## Project Milestones
 
@@ -22,7 +22,7 @@ fix small typos.
 
 ### WabbitScript
 
-Our first task is to implement a compiler for [WabbitScript](WabbitScript), a subset of the Wabbit language that only supports scripting statements.
+Our first task is to implement a compiler for [WabbitScript](WabbitScript.md), a subset of the Wabbit language that only supports scripting statements.
 
 * [Project 1 - The Model](Project1_The_Model.md)
 * [Project 2 - The Interpreter](Project2_The_Interpreter.md) 
@@ -36,7 +36,7 @@ Our first task is to implement a compiler for [WabbitScript](WabbitScript), a su
 
 ### WabbitFunc
 
-Once you have WabbitScript working, you will add support for user-defined functions.  See [WabbitFunc](WabbitFunc).
+Once you have WabbitScript working, you will add support for user-defined functions.  See [WabbitFunc](WabbitFunc.md).
 
 * [Project 10 - Functions](Project10_FunctionCalls.md)
 
