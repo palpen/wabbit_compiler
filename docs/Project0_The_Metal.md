@@ -5,11 +5,11 @@ As programmers, we're all used to writing code in a high-level language like Pyt
 In the file `metal/metal.py` you will find a small simulated CPU.  Your first task is to write some small programs that run on the CPU. Make sure you're working in your own branch of the Git repo:
 
 ```
-bash $ cd compilers_2020_05
+bash $ cd compilers_2020_07
 bash $ git checkout -b yourname
 ```
 
-Go the `meta/metal.py` file and follow the instructions inside. Reminder: If you want me to be able to look at your code and answer questions, you will need to commit your code to the repo and push your changes upstream.
+Go the `metal/metal.py` file and follow the instructions inside. Reminder: If you want me to be able to look at your code and answer questions, you will need to commit your code to the repo and push your changes upstream.
 
 ```
 bash $ git push -u origin yourname

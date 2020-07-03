@@ -77,7 +77,7 @@ on the wiki.   Reposted here.
 
 ## Resources
 
-* [Documents & Knowledge Base](docs/index.md)
+* [Documents & Knowledge Base](docs/README.md)
 
 ## Videos
 
