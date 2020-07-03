@@ -17,7 +17,7 @@
 #
 # Note: This file only includes examples for WabbitScript.  See
 #
-# https://github.com/dabeaz/compilers_2020_05/wiki/WabbitScript.md
+#     docs/WabbitScript.md
 
 
 from wabbit.model import *

@@ -5,7 +5,7 @@
 # far, the most difficult part of the project. Please see
 # the following:
 #
-# https://github.com/dabeaz/compilers_2020_05/wiki/WabbitType.md
+#     docs/WabbitType.md
 #
 # DO NOT WORK ON THIS UNLESS YOU HAVE EVERYTHING ELSE WORKING!
 #

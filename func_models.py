@@ -11,7 +11,7 @@
 # This file contains a single example that you should represent
 # using your model.  Please see the following document for more information.
 #
-# https://github.com/dabeaz/compilers_2020_05/wiki/WabbitFunc.md
+#     docs/WabbitFunc.md
 
 from wabbit.model import *
 

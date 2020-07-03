@@ -1,9 +1,9 @@
 # wabbit/llvm.py
 #
 # In this file you will have your compiler generate LLVM output.  Don't
-# start this unless you have first worked through the LLVM Tutorial:
+# start this unless you have first worked through the LLVM Tutorial in
 #
-#     https://github.com/dabeaz/compilers_2020_05/wiki/LLVM-Tutorial
+#     docs/LLVM-Tutorial.md
 #
 # Once you have done that, come back here.
 #

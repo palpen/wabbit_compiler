@@ -14,9 +14,9 @@
 # instructions. Therefore, it might be easier to implement things in C 
 # as a first step.
 #
-# As a preliminary step, please read the short C tutorial at
+# As a preliminary step, please read the short C tutorial in
 #
-#  https://github.com/dabeaz/compilers_2020_05/wiki/C-Programming-Tutorial
+#    docs/C-Programming-Tutorial.md
 #
 # Come back here when you've looked it over.  Our goal is to produce
 # low-level C code where you are ONLY allowed to use the 

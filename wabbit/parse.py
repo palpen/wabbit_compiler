@@ -5,7 +5,7 @@
 # WabbitScript--a subset of the full Wabbit language.  It's written as
 # a EBNF.  You will need to expand the grammar to include later features.
 #
-# Reference: https://github.com/dabeaz/compilers_2020_05/wiki/WabbitScript
+# Reference: docs/WabbitScript.md
 #
 # The following conventions are used:
 # 

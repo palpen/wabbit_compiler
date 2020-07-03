@@ -3,7 +3,7 @@
 # Generate WebAssembly from the Wabbit model.  Don't even attempt this
 # unless you have first worked through the WebAssembly tutorial.
 #
-#     https://github.com/dabeaz/compilers_2020_05/wiki/WebAssembly-Tutorial
+#     docs/WebAssembly-Tutorial.md
 #
 # The overall strategy here is going to be very similar to how type
 # checking works.  Recall, in type checking, there was an environment
