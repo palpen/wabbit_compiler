@@ -46,10 +46,10 @@ Topic: Write a Compiler, July 13-17, 2020.
 Time: 09:30 - 17:30 US CDT (UTC-05:00). 
 
 Join Zoom Meeting
-https://us02web.zoom.us/j/82940491798?pwd=U05FZ1FIZHhTeWNWbitkWlNOOFk3Zz09
+https://us02web.zoom.us/j/89101593617?pwd=ejg5NmlHVlREbnh0Q0tscDBqZU51QT09
 
-Meeting ID: 829 4049 1798.
-Password: 016509.
+Meeting ID: 891 0159 3617
+Password: 681844
 
 ## Course Requirements
 
