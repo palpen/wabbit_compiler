@@ -38,7 +38,7 @@ Our first task is to implement a compiler for [WabbitScript](WabbitScript.md), a
 
 Once you have WabbitScript working, you will add support for user-defined functions.  See [WabbitFunc](WabbitFunc.md).
 
-* [Project 10 - Functions](Project10_FunctionCalls.md)
+* [Project 10 - Functions](Project10_Function_Calls.md)
 
 ### WabbitType
 
