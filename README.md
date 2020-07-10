@@ -51,6 +51,10 @@ https://us02web.zoom.us/j/89101593617?pwd=ejg5NmlHVlREbnh0Q0tscDBqZU51QT09
 Meeting ID: 891 0159 3617
 Password: 681844
 
+## Chat
+
+Discussion/Chat for the course can be found on [Gitter](https://gitter.im/dabeaz-course/compilers_2020_07).
+
 ## Course Requirements
 
 Here are some of the basic software requirements:
