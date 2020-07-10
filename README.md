@@ -86,6 +86,9 @@ Short video lectures will introduce important parts of the project.
 They will be posted here about a day in advance (an email notification
 will also be sent).
 
+* [Course Introduction](https://vimeo.com/437164645/de9053efbc) (20 min)
+* [Part 0 - Preliminaries](https://vimeo.com/437166026/5a710f2e58) (7 min)
+
 ## Live Session Recordings
 
 Video recordings of live sessions will be posted here.
