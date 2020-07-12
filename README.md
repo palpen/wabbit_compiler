@@ -93,6 +93,7 @@ will also be sent).
 * [Course Introduction](https://vimeo.com/437164645/de9053efbc) (20 min)
 * [Part 0 - Preliminaries](https://vimeo.com/437166026/5a710f2e58) (7 min)
 * [Part 1 - The Structure of Programs](https://vimeo.com/437187898/2be4149e65) (9 min)
+* [Part 2 - The Evaluation of Programs](https://vimeo.com/437683254/2e02302bd4) (14 min)
 
 ## Live Session Recordings
 
