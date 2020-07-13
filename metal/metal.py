@@ -1,5 +1,5 @@
 # metal.py
-# 
+#
 # One of the main roles of a compiler is taking high-level programs
 # such as what you might write in C or Python and reducing them to
 # instructions that can execute on actual hardware.
@@ -12,7 +12,7 @@
 # performing output.
 #
 # See the end of this file for some exercises.
-#
+
 # The CPU has 8 registers (R0, R1, ..., R7) that hold 32-bit unsigned
 # integer values.  Register R0 is hardwired to always contains the
 # value 0. Register R7 is initialized to the highest valid memory
@@ -21,7 +21,7 @@
 #
 # The memory of the machine consists of 65536 memory slots,
 # each of which can hold an integer value.  Special LOAD/STORE
-# instructions access the memory.  Instructions are stored 
+# instructions access the memory.  Instructions are stored
 # separately.  All memory addresses from 0-65535 may be used.
 #
 # The machine has a single I/O port which is mapped to the memory
@@ -52,7 +52,7 @@
 #
 # In the the above instructions 'Rx' means some register number such
 # as 'R0', 'R1', etc.  The 'PC' register may also be used as a register.
-# All memory instructions take their address from register plus an offset 
+# All memory instructions take their address from register plus an offset
 # that's encoded as part of the instruction.
 
 IO_OUT = 65535
@@ -127,6 +127,7 @@ class Metal:
         self.registers['PC'] = self.registers[rd] + offset
 
     def BZ(self, rt, offset):
+        # print("Value of PC before BZ:", self.registers['PC'])
         if not self.registers[rt]:
             self.registers['PC'] += offset
 
@@ -134,8 +135,44 @@ class Metal:
         self.running = False
 
 # =============================================================================
+#              ('ADD', 'R1', 'R2', 'R4'),
+#              ('SUB', 'R4', 'R3', 'R5'),
+#              # Print the result.  Change R1 to location of result.
+#              ('STORE', 'R5', 'R0', IO_OUT),
+#              ('ADD', 'R1', 'R2', 'R4'),
+#              ('SUB', 'R4', 'R3', 'R5'),
+#              # Print the result.  Change R1 to location of result.
+#              ('STORE', 'R5', 'R0', IO_OUT),
+#              ('ADD', 'R1', 'R2', 'R4'),
+#              ('SUB', 'R4', 'R3', 'R5'),
+#              # Print the result.  Change R1 to location of result.
+#              ('STORE', 'R5', 'R0', IO_OUT),
+#              ('ADD', 'R1', 'R2', 'R4'),
+#              ('SUB', 'R4', 'R3', 'R5'),
+#              # Print the result.  Change R1 to location of result.
+#              ('STORE', 'R5', 'R0', IO_OUT),
+#              ('ADD', 'R1', 'R2', 'R4'),
+#              ('SUB', 'R4', 'R3', 'R5'),
+#              # Print the result.  Change R1 to location of result.
+#              ('STORE', 'R5', 'R0', IO_OUT),
+#              ('ADD', 'R1', 'R2', 'R4'),
+#              ('SUB', 'R4', 'R3', 'R5'),
+#              # Print the result.  Change R1 to location of result.
+#              ('STORE', 'R5', 'R0', IO_OUT),
+#              ('ADD', 'R1', 'R2', 'R4'),
+#              ('SUB', 'R4', 'R3', 'R5'),
+#              # Print the result.  Change R1 to location of result.
+#              ('STORE', 'R5', 'R0', IO_OUT),
+#              ('ADD', 'R1', 'R2', 'R4'),
+#              ('SUB', 'R4', 'R3', 'R5'),
+#              # Print the result.  Change R1 to location of result.
+#              ('STORE', 'R5', 'R0', IO_OUT),
+#              ('ADD', 'R1', 'R2', 'R4'),
+#              ('SUB', 'R4', 'R3', 'R5'),
+#              # Print the result.  Change R1 to location of result.
+#              ('STORE', 'R5', 'R0', IO_OUT),
 
-if __name__ == '__main__':        
+if __name__ == '__main__':
     machine = Metal()
 
     # ----------------------------------------------------------------------
@@ -144,15 +181,17 @@ if __name__ == '__main__':
     # The CPU of a computer executes low-level instructions.  Using the
     # Metal instruction set above, show how you would compute 3 + 4 - 5
     # and print out the result.
-    # 
+    #
 
     prog1 = [ # Instructions here
               ('CONST', 3, 'R1'),
               ('CONST', 4, 'R2'),
               # More instructions here
-              # ...
+              ('CONST', 5, 'R3'),
+              ('ADD', 'R1', 'R2', 'R4'),
+              ('SUB', 'R4', 'R3', 'R5'),
               # Print the result.  Change R1 to location of result.
-              ('STORE', 'R1', 'R0', IO_OUT),    
+              ('STORE', 'R5', 'R0', IO_OUT),
               ('HALT',),
               ]
 
@@ -167,14 +206,18 @@ if __name__ == '__main__':
     #
     # Note: The machine doesn't implement multiplication. So, you need
     # to figure out how to do it.  Hint:  You can use one of the values
-    # as a counter. 
+    # as a counter.
 
     prog2 = [ # Instructions here
-              ('CONST', 3, 'R1'),
+              ('CONST', 3, 'R1'),  # Counter
               ('CONST', 7, 'R2'),
-              # ...
+              ('CONST', 0, 'R3'),
+              ('ADD', 'R3', 'R2', 'R3'),
+              ('DEC', 'R1'),
+              ('BZ', 'R1', 1),  # PC is incremented after instruction is invoked
+              ('JMP', 'R0', 3),
               # Print result. Change R1 to location of result
-              ('STORE', 'R1', 'R0', IO_OUT),
+              ('STORE', 'R3', 'R0', IO_OUT),
               ('HALT',),
             ]
 
@@ -205,26 +248,49 @@ if __name__ == '__main__':
     # How would you encode something like this into machine code?
     # Specifically.  How would you define the function mul(). How
     # would it receive inputs?  How would it return a value?  How
-    # would the branching/jump statements work?  
+    # would the branching/jump statements work?
 
     prog3 = [
         ('CONST', 5, 'R1'),       # n = 5
-        # result = 1
-        # while n > 0:
-        #     result = mul(result,  n)
-        #     n -= 1
+        ('CONST', 1, 'R2'),  # Result
 
-        #
-        # ... instructions here
-        # 
+        # while n > 0:
+        #     result = mul(n, result)
+        #     n -= 1
+        ('BZ', 'R1', 2),  # !!! Need to change jump increment when adding new lines
+
+        # Store arguments in memory
+        ('STORE', 'R1', 'R0', 1),  # n
+        ('STORE', 'R2', 'R0', 2),  # result
+
+        # !!! Invoke the function here
+
+
+        ('DEC', 'R1'),  # Decrement n
+        ('JMP', 'R0', 2),  # Jump to BZ to check loop condition
 
         # print(result)
         ('STORE', 'R2', 'R0', IO_OUT),   # R2 Holds the Result
         ('HALT',),
 
+        # func  mul(x, y) -> x * y
+        # Store location of function in the program
+
+
+        # Load x from memory into R3
+        # Load y from memory into R4
+        ('LOAD', 'R0', 'R3', 1),
+        ('LOAD', 'R0', 'R4', 2),
+        ('CONST', 0, 'R5'),  # hold result here
+
+        ('ADD', 'R5', 'R4', 'R5'),
+        ('DEC', 'R3'),
+        ('BZ', 'R3', 1),  # PC is incremented after instruction is invoked
+        ('JMP', 'R0', OFFSET),  # !!! Update offset
+        ('STORE', 'R5', 'R0', 3),  # Store result to memory
+
         # ----------------------------------
-        # ; mul(x, y) -> x * y
-        # 
+        #
         #    def mul(x, y):
         #        result = 0
         #        while x > 0:
@@ -233,37 +299,39 @@ if __name__ == '__main__':
         #        return result
         #
         # ... instructions here
+
+        # !!! Store results to memory
     ]
 
     print("PROGRAM 3::: Expected Output: 120")
     machine.run(prog3)
     print(":::PROGRAM 3 DONE")
-    
-    # ----------------------------------------------------------------------
-    # Problem 4: Ultimate Challenge
-    #
-    # How would you modify Problem 3 to make a recursive function work?
-    #
-    #    def mul(x, y):
-    #        if x > 0:
-    #            return y + mul(x-1, y)
-    #        else:
-    #            return 0
-    #
-    #    def fact(n):
-    #        if n == 0:
-    #            return 1
-    #        else:
-    #            return mul(n, fact(n-1))
-    #    
-    #    print(fact(5))
 
-    prog4 = [
-        # Print result (assumed to be in R1)
-        ('STORE', 'R1', 'R0', IO_OUT),
-        ('HALT',)
-        ]
-
-    print("PROGRAM 4::: Expected Output: 120")
-    machine.run(prog4)
-    print(":::PROGRAM 4 DONE")
+#    # ----------------------------------------------------------------------
+#    # Problem 4: Ultimate Challenge
+#    #
+#    # How would you modify Problem 3 to make a recursive function work?
+#    #
+#    #    def mul(x, y):
+#    #        if x > 0:
+#    #            return y + mul(x-1, y)
+#    #        else:
+#    #            return 0
+#    #
+#    #    def fact(n):
+#    #        if n == 0:
+#    #            return 1
+#    #        else:
+#    #            return mul(n, fact(n-1))
+#    #
+#    #    print(fact(5))
+#
+#    prog4 = [
+#        # Print result (assumed to be in R1)
+#        ('STORE', 'R1', 'R0', IO_OUT),
+#        ('HALT',)
+#        ]
+#
+#    print("PROGRAM 4::: Expected Output: 120")
+#    machine.run(prog4)
+#    print(":::PROGRAM 4 DONE")
