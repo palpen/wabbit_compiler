@@ -116,3 +116,11 @@ will also be sent).
 
 Video recordings of live sessions will be posted here.
 
+**Day 1**
+
+* [Course Intro/Project Demo](https://vimeo.com/437949039/17d0f4b52d) (27 min)
+* [Warmup exercises, Project 1 start](https://vimeo.com/437949958/6c08b2b044) (35 min)
+* [Project 1, model building](https://vimeo.com/438005734/3978c944d5) (8 min)
+* [Project 1, practicalities](https://vimeo.com/438006039/b2c4453294) (35 min)
+* [End of day](https://vimeo.com/438017483/bfc2d0bbe7) (7 min)
+
