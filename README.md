@@ -51,6 +51,10 @@ https://us02web.zoom.us/j/89101593617?pwd=ejg5NmlHVlREbnh0Q0tscDBqZU51QT09
 Meeting ID: 891 0159 3617
 Password: 681844
 
+## Chat
+
+Discussion/Chat for the course can be found on [Gitter](https://gitter.im/dabeaz-course/compilers_2020_07).
+
 ## Course Requirements
 
 Here are some of the basic software requirements:
@@ -76,6 +80,23 @@ on the wiki.   Reposted here.
 * [Project 0.25 - The Mental](docs/Project0_25_The_Mental.md)
 * [Project 0.5 - SillyWabbit](docs/Project0_5_SillyWabbit.md)
 
+## The Project
+
+We are writing a compiler for the language [Wabbit](docs/Wabbit-Specification.md).
+The following links provide more information on specific project stages.
+
+* [Project 1 - The Model](docs/Project1_The_Model.md) ([video, 9 min](https://vimeo.com/437187898/2be4149e65))
+* [Project 2 - The Interpreter](docs/Project2_The_Interpreter.md)([video, 14 min](https://vimeo.com/437683254/2e02302bd4))
+* [Project 3 - The Lexer](docs/Project3_Tokenizing.md)
+* [Project 4 - The Parser](docs/Project4_Parsing.md)
+* [Project 5 - Type Checking](docs/Project5_Type_Checking.md)
+* [Project 6 - Compile to C](docs/Project6_Compile_to_C.md)
+* [Project 7 - Transformation](docs/Project7_Transformation.md)
+* [Project 8 - Compile to LLVM](docs/Project8_Generating_LLVM.md)
+* [Project 9 - Compile to WebAssembly](docs/Project9_Generating_WebAssembly.md)
+* [Project 10 - Functions](docs/Project10_Function_Calls.md)
+* [Project 11 - Types! Types! Types!](docs/Project11_Types_Types_Types.md)
+
 ## Resources
 
 * [Documents & Knowledge Base](docs/README.md)
@@ -85,6 +106,11 @@ on the wiki.   Reposted here.
 Short video lectures will introduce important parts of the project.
 They will be posted here about a day in advance (an email notification
 will also be sent).
+
+* [Course Introduction](https://vimeo.com/437164645/de9053efbc) (20 min)
+* [Part 0 - Preliminaries](https://vimeo.com/437166026/5a710f2e58) (7 min)
+* [Part 1 - The Structure of Programs](https://vimeo.com/437187898/2be4149e65) (9 min)
+* [Part 2 - The Evaluation of Programs](https://vimeo.com/437683254/2e02302bd4) (14 min)
 
 ## Live Session Recordings
 
