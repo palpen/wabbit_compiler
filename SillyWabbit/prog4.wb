@@ -2,6 +2,7 @@
 
 /* Wabbit has user-defined structures. Here is an example */
 
+/*
 struct Fraction {
     numer int;
     denom int;
@@ -22,15 +23,38 @@ var a = Fraction(2,3);
 var b = Fraction(1,4);
 var c = add_fraction(a, b);
 print_fraction(c);
-       
+*/
+
+struct Point {
+    x int;
+    y int;
+}
+
+func add_points(p1 Point, p2 Point) Point {
+    return Point((p1.x + p2.x) / 2, (p1.y + p2.y) / 2);
+}
+
+func print_point(p Point) {
+    print p.x;
+    print '/';
+    print '\n';
+    print p.y;
+}
+
+var a = Point(20, 25);
+var b = Point(40, 55);
+var c = add_points(a, b);
+print_point(c);
+
+
 /* Define a struct Point that represent a point (x, y) in 2D.
-   Write a function midpoint that computes the midpoint of a line-segment drawn 
+   Write a function midpoint that computes the midpoint of a line-segment drawn
    between points p1 and p2.
 
-   Compute and print the midpoint of the line drawn between (20, 25) 
+   Compute and print the midpoint of the line drawn between (20, 25)
    and (40, 55).
 
-   Note: The midpoint is computed by calculating the average of the x 
+   Note: The midpoint is computed by calculating the average of the x
    coordinates and the average of the y coordinates.
 
    Can you define a struct Line that consists of two Points?  Can

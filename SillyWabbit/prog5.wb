@@ -1,6 +1,6 @@
 /* prog5.wb
 
-   Wabbit has enums. An enum represents a choice of values. 
+   Wabbit has enums. An enum represents a choice of values.
    Only one may be chosen.  Here is an example:
 */
 
@@ -50,6 +50,23 @@ print(match y {
       });
 
 
+struct Quadratic {
+    a float;
+    b float;
+    c float;
+}
+
+func quad_eq(q Quadratic) MaybeFloat {
+    var term1 = q.b*q.b;
+    var term2 = 4.0 * q.a * q.c;
+    var sqrt_arg = term1 - term2;
+    var sqrt_val = sqrt(sqrt_arg);
+
+    x = (-q.b + sqrt_val)/(2.0*q.a);
+    return MaybeFloat::Yes(x);
+}
+
+
 /* Challenge. Here's a quadratic function:
 
    f(x) = a*x**2 + b*x + c
@@ -58,11 +75,7 @@ print(match y {
 
        x = (-b + sqrt(b**2 - 4*a*c))/(2*a)
 
-   Write a function that computes this using the sqrt() function above. 
+   Write a function that computes this using the sqrt() function above.
    Since there might not be a solution, have it also return a MaybeFloat.
 */
-
-
-   
-
 
