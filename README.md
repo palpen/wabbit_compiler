@@ -85,8 +85,8 @@ on the wiki.   Reposted here.
 We are writing a compiler for the language [Wabbit](docs/Wabbit-Specification.md).
 The following links provide more information on specific project stages.
 
-* [Project 1 - The Model](docs/Project1_The_Model.md) ([video](https://vimeo.com/437187898/2be4149e65))
-* [Project 2 - The Interpreter](docs/Project2_The_Interpreter.md)([video](https://vimeo.com/437683254/2e02302bd4))
+* [Project 1 - The Model](docs/Project1_The_Model.md) ([video, 9 min](https://vimeo.com/437187898/2be4149e65))
+* [Project 2 - The Interpreter](docs/Project2_The_Interpreter.md)([video, 14 min](https://vimeo.com/437683254/2e02302bd4))
 * [Project 3 - The Lexer](docs/Project3_Tokenizing.md)
 * [Project 4 - The Parser](docs/Project4_Parsing.md)
 * [Project 5 - Type Checking](docs/Project5_Type_Checking.md)
