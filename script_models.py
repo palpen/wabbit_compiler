@@ -34,7 +34,7 @@ expr_model  = BinOp('+', Integer(2),
                          BinOp('*', Integer(3), Integer(4)))
 
 # Can you turn it back into source code?
-# print(to_source(expr_model))
+print(to_source(expr_model))
 
 # ----------------------------------------------------------------------
 # Program 1: Printing
@@ -42,6 +42,7 @@ expr_model  = BinOp('+', Integer(2),
 # Encode the following program which tests printing and evaluates some
 # simple expressions.
 #
+# How do you represent a list of statements? Is that a special kind of object? Or, can you just use a Python list?
 
 source1 = """
     print 2 + 3 * -4;
@@ -50,26 +51,33 @@ source1 = """
     print 2 * 3 + -4;
 """
 
-model1 = None
+model1 = Statements([
+    Print(BinOp('*', BinOp('+', Integer(2), Integer(3)), UnaryOp('-', Integer(4)))),
+    Print(BinOp('/', BinOp('-', Float(2.0), Float(3.0)), UnaryOp('-', Float(4.0)))),
+    Print(BinOp('+', UnaryOp('-', Integer(2)), Integer(3))),
+    Print(BinOp('+', BinOp('*', Integer(2), Integer(3)), UnaryOp('-', Integer(4)))),
+])
 
-#print(to_source(model1))
+print(to_source(model1))
 
 # ----------------------------------------------------------------------
-# Program 2: Variable and constant declarations. 
+# Program 2: Variable and constant declarations.
 #            Expressions and assignment.
 #
 # Encode the following statements.
 
 source2 = """
-    const pi = 3.14159;  
+    const pi = 3.14159;
     var tau float;
     tau = 2.0 * pi;
     print tau;
 """
 
-model2 = None
+model2 = Statements([
+    DeclareConst('pi', Float(3.14159)),
+])
 
-#print(to_source(model2))
+print(to_source(model2))
 
 # ----------------------------------------------------------------------
 # Program 3: Conditionals.  This program prints out the minimum of
@@ -116,7 +124,7 @@ model4 = None
 source5 = '''
     var x = 37;
     var y = 42;
-    x = { var t = y; y = x; t; };     // Compound expression. 
+    x = { var t = y; y = x; t; };     // Compound expression.
     print x;
     print y;
 '''
