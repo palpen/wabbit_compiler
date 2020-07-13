@@ -17,8 +17,8 @@ func isprime(n int) bool {
 }
 
 func main() int {
-   print isprime(15);    // Prints 0
-   print isprime(37);    // Prints 1
+   print isprime(15);    // Prints false
+   print isprime(37);    // Prints true
    return 0;
 }
 
