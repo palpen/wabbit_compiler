@@ -106,7 +106,10 @@ class DeclareConst(Declaration):
     '''
     Example: const pi = 3.14159
     '''
-    def __init__(self, name, value):
+    def __init__(self, name, vartype, value):
+        assert isinstance(name, str)
+        assert vartype is None or isinstance(vartype, str)
+        assert isinstance(value, Expression)
         self.name = name
         self.value = value
 
@@ -124,6 +127,26 @@ class DeclareVar(Declaration):
         self.name = name
         self.vartype = vartype
         self.value = value
+
+class Assignment(Statement):
+    '''
+    Example:
+        tau = 2.0 * pi
+    '''
+    def __init__(self, location, value):
+        assert isinstance(location, str)
+        assert isinstance(value, Expression)
+        self.location = location
+        self.value = value
+
+class Load(Expression):
+    '''
+    Retrieves the value assigned to a variable
+    '''
+    def __init__(self, location):
+        self.location = location
+    def __repr__(self):
+        return f'Load({self.location})'
 
 class BinOp(Expression):
     '''
@@ -170,17 +193,24 @@ def to_source(node):
     elif isinstance(node, UnaryOp):
         return f'{node.op}{to_source(node.operand)}'
     elif isinstance(node, DeclareConst):
-        return f'const {node.name} {to_source(node.value)}'
-
-
+        return f'const {node.name} = {to_source(node.value)};\n'
+    elif isinstance(node, DeclareVar):
+        return (f'var {node.name}' + \
+            (f' {node.vartype}' if node.vartype else '') + \
+            ((" = " + to_source(node.value)) if node.value else '') + \
+            ";\n")
+    elif isinstance(node, Assignment):
+        return f'{node.location} = {to_source(node.value)};\n'
+    elif isinstance(node, Load):
+        return f'{node.location}'
 
 
     elif isinstance(node, BinOp):
         return f'{to_source(node.left)} {node.op} {to_source(node.right)}'
     elif isinstance(node, Print):
-        return f'print {to_source(node.expression)}'
+        return f'print {to_source(node.expression)};\n'
     elif isinstance(node, Statements):
-        return ''.join([to_source(s) + ';\n' for s in node.statements])
+        return ''.join([to_source(s) for s in node.statements])
     else:
         raise RuntimeError(f"Can't convert {node} to source")
 

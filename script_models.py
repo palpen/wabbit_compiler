@@ -52,10 +52,10 @@ source1 = """
 """
 
 model1 = Statements([
-    Print(BinOp('*', BinOp('+', Integer(2), Integer(3)), UnaryOp('-', Integer(4)))),
-    Print(BinOp('/', BinOp('-', Float(2.0), Float(3.0)), UnaryOp('-', Float(4.0)))),
-    Print(BinOp('+', UnaryOp('-', Integer(2)), Integer(3))),
-    Print(BinOp('+', BinOp('*', Integer(2), Integer(3)), UnaryOp('-', Integer(4)))),
+    Print(BinOp('*', BinOp('+', Integer("2"), Integer("3")), UnaryOp('-', Integer("4")))),
+    Print(BinOp('/', BinOp('-', Float("2.0"), Float("3.0")), UnaryOp('-', Float("4.0")))),
+    Print(BinOp('+', UnaryOp('-', Integer("2")), Integer("3"))),
+    Print(BinOp('+', BinOp('*', Integer("2"), Integer("3")), UnaryOp('-', Integer("4")))),
 ])
 
 print(to_source(model1))
@@ -74,7 +74,10 @@ source2 = """
 """
 
 model2 = Statements([
-    DeclareConst('pi', Float(3.14159)),
+    DeclareConst('pi', 'float', Float("3.14159")),
+    DeclareVar('tau', 'float', None),
+    Assignment('tau', BinOp('*', Float("2.0"), Load('pi'))),
+    Print(Load('tau')),
 ])
 
 print(to_source(model2))
