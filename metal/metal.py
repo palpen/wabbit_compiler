@@ -134,44 +134,6 @@ class Metal:
     def HALT(self):
         self.running = False
 
-# =============================================================================
-#              ('ADD', 'R1', 'R2', 'R4'),
-#              ('SUB', 'R4', 'R3', 'R5'),
-#              # Print the result.  Change R1 to location of result.
-#              ('STORE', 'R5', 'R0', IO_OUT),
-#              ('ADD', 'R1', 'R2', 'R4'),
-#              ('SUB', 'R4', 'R3', 'R5'),
-#              # Print the result.  Change R1 to location of result.
-#              ('STORE', 'R5', 'R0', IO_OUT),
-#              ('ADD', 'R1', 'R2', 'R4'),
-#              ('SUB', 'R4', 'R3', 'R5'),
-#              # Print the result.  Change R1 to location of result.
-#              ('STORE', 'R5', 'R0', IO_OUT),
-#              ('ADD', 'R1', 'R2', 'R4'),
-#              ('SUB', 'R4', 'R3', 'R5'),
-#              # Print the result.  Change R1 to location of result.
-#              ('STORE', 'R5', 'R0', IO_OUT),
-#              ('ADD', 'R1', 'R2', 'R4'),
-#              ('SUB', 'R4', 'R3', 'R5'),
-#              # Print the result.  Change R1 to location of result.
-#              ('STORE', 'R5', 'R0', IO_OUT),
-#              ('ADD', 'R1', 'R2', 'R4'),
-#              ('SUB', 'R4', 'R3', 'R5'),
-#              # Print the result.  Change R1 to location of result.
-#              ('STORE', 'R5', 'R0', IO_OUT),
-#              ('ADD', 'R1', 'R2', 'R4'),
-#              ('SUB', 'R4', 'R3', 'R5'),
-#              # Print the result.  Change R1 to location of result.
-#              ('STORE', 'R5', 'R0', IO_OUT),
-#              ('ADD', 'R1', 'R2', 'R4'),
-#              ('SUB', 'R4', 'R3', 'R5'),
-#              # Print the result.  Change R1 to location of result.
-#              ('STORE', 'R5', 'R0', IO_OUT),
-#              ('ADD', 'R1', 'R2', 'R4'),
-#              ('SUB', 'R4', 'R3', 'R5'),
-#              # Print the result.  Change R1 to location of result.
-#              ('STORE', 'R5', 'R0', IO_OUT),
-
 if __name__ == '__main__':
     machine = Metal()
 
@@ -252,55 +214,43 @@ if __name__ == '__main__':
 
     prog3 = [
         ('CONST', 5, 'R1'),       # n = 5
-        ('CONST', 1, 'R2'),  # Result
+        ('CONST', 1, 'R2'),       # Result
 
         # while n > 0:
         #     result = mul(n, result)
         #     n -= 1
-        ('BZ', 'R1', 2),  # !!! Need to change jump increment when adding new lines
+
+        # test_n
+        ('BZ', 'R1', "exit"),
 
         # Store arguments in memory
-        ('STORE', 'R1', 'R0', 1),  # n
-        ('STORE', 'R2', 'R0', 2),  # result
+        ('STORE', 'R1', 'R0', "mem_loc_1"),  # n
+        ('STORE', 'R2', 'R0', "mem_loc_2"),  # result
 
-        # !!! Invoke the function here
-
+        # Invoke mult_func here
+        ('JMP', 'R0', "mult_func"),
+        ('LOAD', 'R0', 'R2', "mem_loc_3"),  # load output of mult_func into R2 (to replace previous results)
 
         ('DEC', 'R1'),  # Decrement n
-        ('JMP', 'R0', 2),  # Jump to BZ to check loop condition
+        ('JMP', 'R0', "test_n"),
 
-        # print(result)
+        # exit
         ('STORE', 'R2', 'R0', IO_OUT),   # R2 Holds the Result
         ('HALT',),
 
-        # func  mul(x, y) -> x * y
-        # Store location of function in the program
+        # mult_func
+        ('LOAD', 'R0', 'R3', "mem_loc_1"),  # Load x from mem into R3
+        ('LOAD', 'R0', 'R4', "mem_loc_2"),  # Load y from mem into R4
+        ('CONST', 0, 'R5'),                 # Initialize result into R5
 
-
-        # Load x from memory into R3
-        # Load y from memory into R4
-        ('LOAD', 'R0', 'R3', 1),
-        ('LOAD', 'R0', 'R4', 2),
-        ('CONST', 0, 'R5'),  # hold result here
-
+        # loop
         ('ADD', 'R5', 'R4', 'R5'),
         ('DEC', 'R3'),
-        ('BZ', 'R3', 1),  # PC is incremented after instruction is invoked
-        ('JMP', 'R0', OFFSET),  # !!! Update offset
-        ('STORE', 'R5', 'R0', 3),  # Store result to memory
+        ('BZ', 'R3', "func_return"),
+        ('JMP', 'R0', "loop"),
 
-        # ----------------------------------
-        #
-        #    def mul(x, y):
-        #        result = 0
-        #        while x > 0:
-        #            result += y
-        #            x -= 1
-        #        return result
-        #
-        # ... instructions here
-
-        # !!! Store results to memory
+        # func_return
+        ('STORE', 'R5', 'R0', "mem_loc_3"),  # Store result to memory
     ]
 
     print("PROGRAM 3::: Expected Output: 120")
