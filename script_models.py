@@ -151,8 +151,21 @@ source5 = '''
     print y;
 '''
 
-model5 = None
-# print(to_source(model5))
+model5 = Statements([
+    DeclareVar('x', None, Integer("37")),
+    DeclareVar('y', None, Integer("42")),
+    Assignment('x',
+               Compound(Statements([
+                    DeclareVar('t', None, Load('y')),
+                    Assignment('y', Load('x')),
+                    Load('t')
+               ]))
+    ),
+    Print(Load('x')),
+    Print(Load('y'))
+])
+
+print(to_source(model5))
 
 # ----------------------------------------------------------------------
 # What's next?  If you've made it here are are looking for more,

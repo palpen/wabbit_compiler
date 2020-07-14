@@ -181,6 +181,12 @@ class IfStatement(Statement):
         return f'IfStatement({self.condition},{self.consequence},{self.alternative})'
 
 class WhileLoop(Statement):
+    '''
+    Example:
+        while condition {
+            body
+        }
+    '''
     def __init__(self, condition, body):
         assert isinstance(condition, Expression)
         assert isinstance(body, Statement) or isinstance(body, Statements)
@@ -188,6 +194,17 @@ class WhileLoop(Statement):
         self.body = body
     def __repr__(self):
         return f'WhileLoop({self.condition},{self.body})'
+
+class Compound(Expression):
+    '''
+    Example:
+        x = {var t = y; y = x; t; };
+    '''
+    def __init__(self, statements):
+        assert isinstance(statements, Statements)
+        self.statements = statements
+    def __repr__(self):
+        return f'Compound({self.statements})'
 
 class Print(Statement):
     '''
@@ -242,12 +259,9 @@ def to_source(node):
         return f'while {to_source(node.condition)}' + ' {\n' + \
                f'    {to_source(node.body)}' + \
                '}'
-
-
-
-
-
-
+    elif isinstance(node, Compound):
+        return '{ ' + \
+               ''.join([to_source(s).rstrip() for s in node.statements.statements])  + '; }'
 
 
 
