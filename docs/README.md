@@ -26,9 +26,10 @@ fix small typos.
 Our first task is to implement a compiler for [WabbitScript](WabbitScript.md), a subset of the Wabbit language that only supports scripting statements.
 
 * [Project 1 - The Model](Project1_The_Model.md) [video](https://vimeo.com/437187898/2be4149e65) (9 min)
-* [Project 2 - The Interpreter](Project2_The_Interpreter.md) 
-* [Project 3 - The Lexer](Project3_Tokenizing.md)
-* [Project 4 - The Parser](Project4_Parsing.md)
+
+* [Project 2 - The Interpreter](Project2_The_Interpreter.md) ([video, 14 min](https://vimeo.com/437683254/2e02302bd4))
+* [Project 3 - The Lexer](Project3_Tokenizing.md) ([video, 10 min](https://vimeo.com/438048193/408c6cee16))
+* [Project 4 - The Parser](Project4_Parsing.md)([video, 31 min](https://vimeo.com/438047448/2900af0ab5))
 * [Project 5 - Type Checking](Project5_Type_Checking.md)
 * [Project 6 - Compile to C](Project6_Compile_to_C.md)
 * [Project 7 - Transformation](Project7_Transformation.md)

@@ -86,9 +86,9 @@ We are writing a compiler for the language [Wabbit](docs/Wabbit-Specification.md
 The following links provide more information on specific project stages.
 
 * [Project 1 - The Model](docs/Project1_The_Model.md) ([video, 9 min](https://vimeo.com/437187898/2be4149e65))
-* [Project 2 - The Interpreter](docs/Project2_The_Interpreter.md)([video, 14 min](https://vimeo.com/437683254/2e02302bd4))
-* [Project 3 - The Lexer](docs/Project3_Tokenizing.md)
-* [Project 4 - The Parser](docs/Project4_Parsing.md)
+* [Project 2 - The Interpreter](docs/Project2_The_Interpreter.md) ([video, 14 min](https://vimeo.com/437683254/2e02302bd4))
+* [Project 3 - The Lexer](docs/Project3_Tokenizing.md) ([video, 10 min](https://vimeo.com/438048193/408c6cee16))
+* [Project 4 - The Parser](docs/Project4_Parsing.md)([video, 31 min](https://vimeo.com/438047448/2900af0ab5))
 * [Project 5 - Type Checking](docs/Project5_Type_Checking.md)
 * [Project 6 - Compile to C](docs/Project6_Compile_to_C.md)
 * [Project 7 - Transformation](docs/Project7_Transformation.md)
@@ -111,6 +111,8 @@ will also be sent).
 * [Part 0 - Preliminaries](https://vimeo.com/437166026/5a710f2e58) (7 min)
 * [Part 1 - The Structure of Programs](https://vimeo.com/437187898/2be4149e65) (9 min)
 * [Part 2 - The Evaluation of Programs](https://vimeo.com/437683254/2e02302bd4) (14 min)
+* [Part 3 - Tokenizing](https://vimeo.com/438048193/408c6cee16) (10 min)
+* [Part 4 - Parsing](https://vimeo.com/438047448/2900af0ab5) (31 min)
 
 ## Live Session Recordings
 
