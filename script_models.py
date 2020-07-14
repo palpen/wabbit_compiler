@@ -124,8 +124,19 @@ source4 = '''
     }
 '''
 
-model4 = None
-# print(to_source(model4))
+model4 = Statements([
+    DeclareConst('n', None, Integer("10")),
+    DeclareVar('x', 'int', Integer("1")),
+    DeclareVar('fact', 'int', Integer("1")),
+    WhileLoop(BinOp('<', Load('x'), Load('n')),
+              Statements([
+                Assignment('fact', BinOp('*', Load('fact'), Load('x'))),
+                Print(Load('fact')),
+                Assignment('x', BinOp('+', Load('x'), Integer("1"))),
+              ])
+    )
+])
+print(to_source(model4))
 
 # ----------------------------------------------------------------------
 # Program 5: Compound Expressions.  This program swaps the values of

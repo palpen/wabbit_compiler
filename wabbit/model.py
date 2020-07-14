@@ -180,13 +180,21 @@ class IfStatement(Statement):
     def __repr__(self):
         return f'IfStatement({self.condition},{self.consequence},{self.alternative})'
 
+class WhileLoop(Statement):
+    def __init__(self, condition, body):
+        assert isinstance(condition, Expression)
+        assert isinstance(body, Statement) or isinstance(body, Statements)
+        self.condition = condition
+        self.body = body
+    def __repr__(self):
+        return f'WhileLoop({self.condition},{self.body})'
+
 class Print(Statement):
     '''
     Example: print 1.0
     '''
     def __init__(self, expression):
         self.expression = expression
-
     def __repr__(self):
         return f'Print({self.expression})'
 
@@ -198,7 +206,6 @@ class Statements:
     '''
     def __init__(self, statements):
         self.statements = statements
-
     def __repr__(self):
         return f'Statements({self.statements})'
 
@@ -231,6 +238,13 @@ def to_source(node):
                '} else {\n' + \
                f'    {to_source(node.alternative)}' + \
                '}'
+    elif isinstance(node, WhileLoop):
+        return f'while {to_source(node.condition)}' + ' {\n' + \
+               f'    {to_source(node.body)}' + \
+               '}'
+
+
+
 
 
 
