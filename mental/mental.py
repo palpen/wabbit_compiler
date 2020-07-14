@@ -24,12 +24,13 @@ ADD(2, 3, print)        # --> Prints 5
 # Exercise 1:
 #
 # Show how you would calculate and print the final value of the following
-# math expression using only the above functions and print.  
+# math expression using only the above functions and print.
 #
 #    2 + 3 - 4 - 5
 #
 # Hint: It's also ok to use lambda.
 
+ADD(2, 3, lambda x: SUB(x, 4, lambda x: SUB(x, 5, print)))
 
 # -----------------------------------------------------------------------------
 # Exercise 2:
@@ -38,7 +39,7 @@ ADD(2, 3, print)        # --> Prints 5
 
 def CMP(x, y, resultfunc):
     resultfunc(x==y)
-    
+
 # Show how you could use ADD, SUB, CMP to implement
 # multiplication.  You may additionally use lambda functions and
 # conditional expressions (i.e., "val1 if test else val2").
