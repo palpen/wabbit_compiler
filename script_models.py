@@ -96,9 +96,17 @@ source3 = '''
     }
 '''
 
-model3 = None
+model3 = Statements([
+    DeclareVar('a', 'int', Integer("2")),
+    DeclareVar('b', 'int', Integer("3")),
+    IfStatement(BinOp('<',
+                      Load('a'),
+                      Load('b')),
+                Print(Load('b')),
+                Print(Load('a')))
+])
 
-# print(to_source(model3))
+print(to_source(model3))
 
 # ----------------------------------------------------------------------
 # Program 4: Loops.  This program prints out the first 10 factorials.

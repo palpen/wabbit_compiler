@@ -71,6 +71,18 @@ class Declaration(Statement):
     '''
     pass
 
+class BinOp(Expression):
+    '''
+    Example: left + right
+    '''
+    def __init__(self, op, left, right):
+        self.op = op
+        self.left = left
+        self.right = right
+
+    def __repr__(self):
+        return f'BinOp({self.op}, {self.left}, {self.right})'
+
 class Integer(Expression):
     '''
     Example: 42
@@ -148,17 +160,25 @@ class Load(Expression):
     def __repr__(self):
         return f'Load({self.location})'
 
-class BinOp(Expression):
+class IfStatement(Statement):
     '''
-    Example: left + right
+    Example:
+        if condition {
+            consequence
+        } else {
+            alternative
+        }
     '''
-    def __init__(self, op, left, right):
-        self.op = op
-        self.left = left
-        self.right = right
+    def __init__(self, condition, consequence, alternative):
+        assert isinstance(condition, Expression)
+        assert isinstance(consequence, Statement)
+        assert isinstance(alternative, Statement)
+        self.condition = condition
+        self.consequence = consequence
+        self.alternative = alternative
 
     def __repr__(self):
-        return f'BinOp({self.op}, {self.left}, {self.right})'
+        return f'IfStatement({self.condition},{self.consequence},{self.alternative})'
 
 class Print(Statement):
     '''
@@ -186,7 +206,9 @@ class Statements:
 # ------ Debugging function to convert a model into source code (for easier viewing)
 
 def to_source(node):
-    if isinstance(node, Integer):
+    if isinstance(node, BinOp):
+        return f'{to_source(node.left)} {node.op} {to_source(node.right)}'
+    elif isinstance(node, Integer):
         return node.value
     elif isinstance(node, Float):
         return node.value
@@ -203,10 +225,19 @@ def to_source(node):
         return f'{node.location} = {to_source(node.value)};\n'
     elif isinstance(node, Load):
         return f'{node.location}'
+    elif isinstance(node, IfStatement):
+        return f'if {to_source(node.condition)}' + ' {\n' + \
+               f'    {to_source(node.consequence)}' + \
+               '} else {\n' + \
+               f'    {to_source(node.alternative)}' + \
+               '}'
 
 
-    elif isinstance(node, BinOp):
-        return f'{to_source(node.left)} {node.op} {to_source(node.right)}'
+
+
+
+
+
     elif isinstance(node, Print):
         return f'print {to_source(node.expression)};\n'
     elif isinstance(node, Statements):
