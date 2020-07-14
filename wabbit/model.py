@@ -76,6 +76,9 @@ class BinOp(Expression):
     Example: left + right
     '''
     def __init__(self, op, left, right):
+        assert isinstance(op, str)
+        assert isinstance(left, Expression)
+        assert isinstance(right, Expression)
         self.op = op
         self.left = left
         self.right = right
@@ -88,6 +91,7 @@ class Integer(Expression):
     Example: 42
     '''
     def __init__(self, value):
+        assert isinstance(value, str)
         self.value = value
 
     def __repr__(self):
@@ -98,6 +102,7 @@ class Float(Expression):
     Example: 1.0
     '''
     def __init__(self, value):
+        assert isinstance(value, str)
         self.value = value
 
     def __repr__(self):
@@ -108,6 +113,8 @@ class UnaryOp(Expression):
     Example: -4.0
     '''
     def __init__(self, op, operand):
+        assert isinstance(op, str)
+        assert isinstance(operand, Expression)
         self.op = op
         self.operand = operand
 
@@ -156,6 +163,7 @@ class Load(Expression):
     Retrieves the value assigned to a variable
     '''
     def __init__(self, location):
+        assert isinstance(location, str)
         self.location = location
     def __repr__(self):
         return f'Load({self.location})'
@@ -206,11 +214,27 @@ class Compound(Expression):
     def __repr__(self):
         return f'Compound({self.statements})'
 
+class ExprAsStatement(Statement):
+    '''
+    Used to deal with cases where an expression
+    is used as a statement
+
+    Example:
+        # The t in the compound expression in
+        x = {var t = y; y = x; t; };
+    '''
+    def __init__(self, value):
+        assert isinstance(value, Expression)
+        self.value = value
+    def __repr__(self):
+        return f'ExprAsStatement({self.value})'
+
 class Print(Statement):
     '''
     Example: print 1.0
     '''
     def __init__(self, expression):
+        assert isinstance(expression, Expression)
         self.expression = expression
     def __repr__(self):
         return f'Print({self.expression})'
@@ -222,6 +246,7 @@ class Statements:
         print "hello";
     '''
     def __init__(self, statements):
+        assert all(isinstance(s, Statement) for s in statements)
         self.statements = statements
     def __repr__(self):
         return f'Statements({self.statements})'
@@ -261,18 +286,13 @@ def to_source(node):
                '}'
     elif isinstance(node, Compound):
         return '{ ' + \
-               ''.join([to_source(s).rstrip() for s in node.statements.statements])  + '; }'
-
-
-
-
+               ''.join([to_source(s).rstrip() for s in node.statements.statements])  + ' }'
+    elif isinstance(node, ExprAsStatement):
+        return f'{to_source(node.value)};'
     elif isinstance(node, Print):
         return f'print {to_source(node.expression)};\n'
     elif isinstance(node, Statements):
         return ''.join([to_source(s) for s in node.statements])
     else:
         raise RuntimeError(f"Can't convert {node} to source")
-
-
-
 
