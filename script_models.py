@@ -30,8 +30,8 @@ from wabbit.model import *
 
 expr_source = "2 + 3 * 4;"
 
-expr_model  = BinOp('+', Integer(2),
-                         BinOp('*', Integer(3), Integer(4)))
+expr_model  = BinOp('+', Integer("2"),
+                         BinOp('*', Integer("3"), Integer("4")))
 
 # Can you turn it back into source code?
 print(to_source(expr_model))
@@ -158,7 +158,7 @@ model5 = Statements([
                Compound(Statements([
                     DeclareVar('t', None, Load('y')),
                     Assignment('y', Load('x')),
-                    Load('t')
+                    ExprAsStatement(Load('t'))
                ]))
     ),
     Print(Load('x')),
