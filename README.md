@@ -89,7 +89,7 @@ The following links provide more information on specific project stages.
 * [Project 2 - The Interpreter](docs/Project2_The_Interpreter.md) ([video, 14 min](https://vimeo.com/437683254/2e02302bd4))
 * [Project 3 - The Lexer](docs/Project3_Tokenizing.md) ([video, 10 min](https://vimeo.com/438048193/408c6cee16))
 * [Project 4 - The Parser](docs/Project4_Parsing.md)([video, 31 min](https://vimeo.com/438047448/2900af0ab5))
-* [Project 5 - Type Checking](docs/Project5_Type_Checking.md)
+* [Project 5 - Type Checking](docs/Project5_Type_Checking.md)([video, 12 min](https://vimeo.com/438496863/40d59a3fb0))
 * [Project 6 - Compile to C](docs/Project6_Compile_to_C.md)
 * [Project 7 - Transformation](docs/Project7_Transformation.md)
 * [Project 8 - Compile to LLVM](docs/Project8_Generating_LLVM.md)
