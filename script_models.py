@@ -22,6 +22,7 @@
 
 from wabbit.model import *
 from wabbit.interp import *
+from wabbit.parse import *
 
 
 
@@ -35,10 +36,6 @@ expr_source = "2 + 3 * 4;"
 
 expr_model  = BinOp('+', Integer("2"),
                          BinOp('*', Integer("3"), Integer("4")))
-
-# Can you turn it back into source code?
-print(to_source(expr_model))
-print(interpret_program(expr_model))
 
 # ----------------------------------------------------------------------
 # Program 1: Printing
@@ -62,9 +59,6 @@ model1 = Statements([
     Print(BinOp('+', BinOp('*', Integer("2"), Integer("3")), UnaryOp('-', Integer("4")))),
 ])
 
-print(to_source(model1))
-print("Output:\n",
-      interpret_program(model1), '\n')
 
 # ----------------------------------------------------------------------
 # Program 2: Variable and constant declarations.
@@ -85,10 +79,6 @@ model2 = Statements([
     Assignment('tau', BinOp('*', Float("2.0"), Load('pi'))),
     Print(Load('tau')),
 ])
-
-print(to_source(model2))
-print("Output:\n",
-      interpret_program(model2), '\n')
 
 
 # ----------------------------------------------------------------------
@@ -115,9 +105,6 @@ model3 = Statements([
                 Print(Load('a')))
 ])
 
-print(to_source(model3))
-print("Output:\n",
-      interpret_program(model3), '\n')
 
 # ----------------------------------------------------------------------
 # Program 4: Loops.  This program prints out the first 10 factorials.
@@ -149,9 +136,6 @@ model4 = Statements([
     )
 ])
 
-print(to_source(model4))
-print("Output:\n",
-      interpret_program(model4), '\n')
 
 # ----------------------------------------------------------------------
 # Program 5: Compound Expressions.  This program swaps the values of
@@ -180,9 +164,27 @@ model5 = Statements([
     Print(Load('y'))
 ])
 
-print(to_source(model5))
-print("Output:\n",
-      interpret_program(model5), '\n')
+
+
+## Tests
+
+source = "print 6;"
+print(parse_source(source))
+
+
+#print(to_source(expr_model))
+#print(interpret_program(expr_model))
+#print(to_source(model1))
+#print("Output:\n", interpret_program(model1), '\n')
+#print(to_source(model2))
+#print("Output:\n", interpret_program(model2), '\n')
+#print(to_source(model3))
+#print("Output:\n", interpret_program(model3), '\n')
+#print(to_source(model4))
+#print("Output:\n", interpret_program(model4), '\n')
+#print(to_source(model5))
+#print("Output:\n", interpret_program(model5), '\n')
+
 
 # ----------------------------------------------------------------------
 # What's next?  If you've made it here are are looking for more,
