@@ -126,3 +126,11 @@ Video recordings of live sessions will be posted here.
 * [Project 1, practicalities](https://vimeo.com/438006039/b2c4453294) (35 min)
 * [End of day](https://vimeo.com/438017483/bfc2d0bbe7) (7 min)
 
+**Day 2**
+
+* [Start of Day, Model, Pretty Printing](https://vimeo.com/438372824/cd34c3dee2) (20 min)
+* [Pretty Printing, Project 2](https://vimeo.com/438373292/1f5a5544f4) (36 min)
+* [Project 2, Interpreter](https://vimeo.com/438374155/79bd6e3b28) (20 min)
+* [Project 3, Tokenizing](https://vimeo.com/438374640/9bad93ccac) (53 min)
+* [Project 4, Parsing](https://vimeo.com/438379681/f366bb2cca) (76 min)
+
