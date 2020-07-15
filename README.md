@@ -134,3 +134,9 @@ Video recordings of live sessions will be posted here.
 * [Project 3, Tokenizing](https://vimeo.com/438374640/9bad93ccac) (53 min)
 * [Project 4, Parsing](https://vimeo.com/438379681/f366bb2cca) (76 min)
 
+**Day 3**
+
+* [Parsing, Expressions](https://vimeo.com/438721070/4256341742) (25 min)
+* [Parser/Interpreter, Testing](https://vimeo.com/438721814/b260282922) (9 min)
+* [Project 5, Type Checking](https://vimeo.com/438722105/a425d0ab2c) (30 min)
+* [Type checking, end of day](https://vimeo.com/438723019/8db0ba43ca) (16 min)
