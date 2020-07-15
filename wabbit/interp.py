@@ -114,7 +114,7 @@ def interp(node, env):
         return interp(node.statements, env.new_child())
 
     elif isinstance(node, ExprAsStatement):
-       return interp(node.value, env)
+       return interp(node.expression, env)
 
     elif isinstance(node, BinOp):
         leftval = interp(node.left, env)
