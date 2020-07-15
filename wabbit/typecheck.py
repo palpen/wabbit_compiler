@@ -3,7 +3,7 @@
 # Type Checking
 # =============
 # This file implements type checking. Wabbit uses what's known as
-# "nomimal typing."  That means that types are given unique
+# "nominal typing."  That means that types are given unique
 # names such as "int", "float", "bool", etc. Two types are the same
 # if they have exactly the same name.  That's it.
 #
