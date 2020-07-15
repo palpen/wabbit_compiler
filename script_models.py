@@ -21,6 +21,9 @@
 
 
 from wabbit.model import *
+from wabbit.interp import *
+
+
 
 # ----------------------------------------------------------------------
 # Simple Expression
@@ -35,6 +38,7 @@ expr_model  = BinOp('+', Integer("2"),
 
 # Can you turn it back into source code?
 print(to_source(expr_model))
+print(interpret_program(expr_model))
 
 # ----------------------------------------------------------------------
 # Program 1: Printing
@@ -59,6 +63,8 @@ model1 = Statements([
 ])
 
 print(to_source(model1))
+print("Output:\n",
+      interpret_program(model1), '\n')
 
 # ----------------------------------------------------------------------
 # Program 2: Variable and constant declarations.
@@ -81,6 +87,9 @@ model2 = Statements([
 ])
 
 print(to_source(model2))
+print("Output:\n",
+      interpret_program(model2), '\n')
+
 
 # ----------------------------------------------------------------------
 # Program 3: Conditionals.  This program prints out the minimum of
@@ -107,6 +116,8 @@ model3 = Statements([
 ])
 
 print(to_source(model3))
+print("Output:\n",
+      interpret_program(model3), '\n')
 
 # ----------------------------------------------------------------------
 # Program 4: Loops.  This program prints out the first 10 factorials.
@@ -118,7 +129,6 @@ source4 = '''
     var fact int = 1;
 
     while x < n {
-        fact = fact * x;
         print fact;
         x = x + 1;
     }
@@ -133,10 +143,15 @@ model4 = Statements([
                 Assignment('fact', BinOp('*', Load('fact'), Load('x'))),
                 Print(Load('fact')),
                 Assignment('x', BinOp('+', Load('x'), Integer("1"))),
+#                WhileLoop(BinOp('<', Load('x'), Load('n')),
+#                          Statements([Assignment('fact', BinOp('*', Load('fact'), Load('x')))]))
               ])
     )
 ])
+
 print(to_source(model4))
+print("Output:\n",
+      interpret_program(model4), '\n')
 
 # ----------------------------------------------------------------------
 # Program 5: Compound Expressions.  This program swaps the values of
@@ -166,6 +181,8 @@ model5 = Statements([
 ])
 
 print(to_source(model5))
+print("Output:\n",
+      interpret_program(model5), '\n')
 
 # ----------------------------------------------------------------------
 # What's next?  If you've made it here are are looking for more,
