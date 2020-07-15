@@ -99,7 +99,7 @@ class Tokenizer(Lexer):
     LE = r'<='
     GT = r'>'
     GE = r'>='
-    EQ = r'='
+    EQ = r'=='
     NE = r'!='
     LAND = r'&&'
     LOR = r'\|\|'
@@ -136,7 +136,6 @@ def main(filename):
     with open(filename) as file:
         text = file.read()
 
-    print(text)
     for tok in tokenize(text):
         print(tok)
 
