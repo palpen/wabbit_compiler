@@ -8,16 +8,16 @@
 # name of the token is on the left. The matching text is on the right.
 #
 # Reserved Keywords:
-#x     CONST   : 'const'
-#x     VAR     : 'var'
-#x     PRINT   : 'print'
-#x     BREAK   : 'break'
-#x     CONTINUE: 'continue'
-#x     IF      : 'if'
-#x     ELSE    : 'else'
-#x     WHILE   : 'while'
-#x     TRUE    : 'true'
-#x     FALSE   : 'false'
+#     CONST   : 'const'
+#     VAR     : 'var'
+#     PRINT   : 'print'
+#     BREAK   : 'break'
+#     CONTINUE: 'continue'
+#     IF      : 'if'
+#     ELSE    : 'else'
+#     WHILE   : 'while'
+#     TRUE    : 'true'
+#     FALSE   : 'false'
 #
 # Identifiers/Names
 #     NAME    : Text starting with a letter or '_', followed by any number
@@ -25,9 +25,9 @@
 #               Examples:  'abc' 'ABC' 'abc123' '_abc' 'a_b_c'
 #
 # Literals:
-#x     INTEGER :  123   (decimal)
+#     INTEGER :  123   (decimal)
 #
-#x     FLOAT   : 1.234
+#     FLOAT   : 1.234
 #               .1234
 #               1234.
 #
@@ -37,27 +37,27 @@
 #               '\''    (literal single quote)
 #
 # Operators:
-#x     PLUS     : '+'
-#x     MINUS    : '-'
-#x     TIMES    : '*'
-#x     DIVIDE   : '/'
-#x     LT       : '<'
-#x     LE       : '<='
-#x     GT       : '>'
-#x     GE       : '>='
-#x     EQ       : '=='
-#x     NE       : '!='
-#x     LAND     : '&&'
-#x     LOR      : '||'
-#x     LNOT     : '!'
+#     PLUS     : '+'
+#     MINUS    : '-'
+#     TIMES    : '*'
+#     DIVIDE   : '/'
+#     LT       : '<'
+#     LE       : '<='
+#     GT       : '>'
+#     GE       : '>='
+#     EQ       : '=='
+#     NE       : '!='
+#     LAND     : '&&'
+#     LOR      : '||'
+#     LNOT     : '!'
 #
 # Miscellaneous Symbols
-#x     ASSIGN   : '='
-#x     SEMI     : ';'
-#x     LPAREN   : '('
-#x     RPAREN   : ')'
-#x     LBRACE   : '{'
-#x     RBRACE   : '}'
+#     ASSIGN   : '='
+#     SEMI     : ';'
+#     LPAREN   : '('
+#     RPAREN   : ')'
+#     LBRACE   : '{'
+#     RBRACE   : '}'
 #
 # Comments:  To be ignored
 #      //             Skips the rest of the line
@@ -82,10 +82,13 @@ class Tokenizer(Lexer):
     tokens = {
         PLUS, MINUS, TIMES, DIVIDE, LT, LE, GT, GE, EQ, NE,
         LAND, LOR, LNOT, ASSIGN, SEMI, LPAREN, RPAREN, LBRACE, RBRACE,
-        NAME, CONST, VAR, PRINT, BREAK, CONTINUE, TRUE, FALSE, IF, ELSE,
-        WHILE, FLOAT, INTEGER, NEWLINE
+        CHAR, NAME, CONST, VAR, PRINT, BREAK, CONTINUE, TRUE, FALSE, IF,
+        ELSE, WHILE, FLOAT, INTEGER
     }
     ignore = ' \t'
+    ignore_inline_comment = r'//[\s\S]*?\n'
+    ignore_block_comment = r'/\*[\s\S]*?\*/'  # match whitespace and !whitespace
+    ignore_newline = r'\n+'
 
     # tokens as regex
     PLUS = r'\+'
@@ -107,7 +110,8 @@ class Tokenizer(Lexer):
     RPAREN = r'\)'
     LBRACE = r'{'
     RBRACE = r'}'
-    NAME = r'[a-zA-Z][a-zA-Z0-9]*'
+    CHAR = r"'.'|'\\x[A-Fa-f]{2}'|'\\n'|'\\'"  # Match single char, byte val, newline, and literal single quote
+    NAME = r'[a-zA-Z_][a-zA-Z0-9]*'
     NAME['const'] = CONST
     NAME['var'] = VAR
     NAME['print'] = PRINT
@@ -115,12 +119,11 @@ class Tokenizer(Lexer):
     NAME['continue'] = CONTINUE
     NAME['true'] = TRUE
     NAME['false'] = FALSE
-    NAME['if'] = IF  # special cases of NAME
+    NAME['if'] = IF
     NAME['else'] = ELSE
     NAME['while'] = WHILE
     FLOAT = r'\d+\.\d*'
     INTEGER = r'\d+'
-    NEWLINE = r'\n'
 
 
 def tokenize(text):
@@ -133,16 +136,11 @@ def main(filename):
     with open(filename) as file:
         text = file.read()
 
+    print(text)
     for tok in tokenize(text):
         print(tok)
 
 if __name__ == '__main__':
     import sys
     main(sys.argv[1])
-
-
-
-
-
-
 
