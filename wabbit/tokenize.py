@@ -83,7 +83,7 @@ class Tokenizer(Lexer):
         PLUS, MINUS, TIMES, DIVIDE, LT, LE, GT, GE, EQ, NE,
         LAND, LOR, LNOT, ASSIGN, SEMI, LPAREN, RPAREN, LBRACE, RBRACE,
         CHAR, NAME, CONST, VAR, PRINT, BREAK, CONTINUE, TRUE, FALSE, IF,
-        ELSE, WHILE, FLOAT, INTEGER
+        ELSE, WHILE, FLOAT, INTEGER, TYP
     }
     ignore = ' \t'
     ignore_inline_comment = r'//[\s\S]*?\n'
@@ -110,6 +110,7 @@ class Tokenizer(Lexer):
     RPAREN = r'\)'
     LBRACE = r'{'
     RBRACE = r'}'
+    TYP = r'int|float|char|bool|unit'
     CHAR = r"'.'|'\\x[A-Fa-f]{2}'|'\\n'|'\\'"  # Match single char, byte val, newline, and literal single quote
     NAME = r'[a-zA-Z_][a-zA-Z0-9]*'
     NAME['const'] = CONST

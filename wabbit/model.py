@@ -46,6 +46,14 @@
 # Feel free to modify as appropriate.  You don't even have to use classes
 # if you want to go in a different direction with it.
 
+VALID_TYPES = {
+    'int',
+    'float',
+    'char',
+    'bool',
+    'unit'
+}
+
 class Statement:
     '''
     Any syntactic entity that may be evaluated to determine its value
@@ -70,6 +78,13 @@ class Declaration(Statement):
     Used to define new names, e.g const pi = 3.14159
     '''
     pass
+
+class NameAsExpr(Expression):
+    def __init__(self, name):
+        assert isinstance(name, str)
+        self.name = name
+    def __repr__(self):
+        return f'NameAsExpr({self.name})'
 
 class BinOp(Expression):
     '''
@@ -147,6 +162,14 @@ class DeclareVar(Declaration):
         self.vartype = vartype
         self.value = value
 
+    def __repr__(self):
+        if self.vartype and self.value:
+            return f'DeclareVar({self.name}, {self.vartype}, {self.value})'
+        if not self.vartype:
+            return f'DeclareVar({self.name}, {self.value})'
+        if not self.value:
+            return f'DeclareVar({self.name}, {self.vartype})'
+
 class Assignment(Statement):
     '''
     Example:
@@ -157,6 +180,16 @@ class Assignment(Statement):
         assert isinstance(value, Expression)
         self.location = location
         self.value = value
+    def __repr__(self):
+        return f'Assignment({self.location},{self.value})'
+
+class Type:
+    def __init__(self, name):
+        assert isinstance(name, str)
+        assert name in VALID_TYPES
+        self.name = name
+    def __repr__(self):
+        return f'Type({self.name})'
 
 class Load(Expression):
     '''
@@ -223,11 +256,11 @@ class ExprAsStatement(Statement):
         # The t in the compound expression in
         x = {var t = y; y = x; t; };
     '''
-    def __init__(self, value):
-        assert isinstance(value, Expression)
-        self.value = value
+    def __init__(self, expression):
+        assert isinstance(expression, Expression)
+        self.expression = expression
     def __repr__(self):
-        return f'ExprAsStatement({self.value})'
+        return f'ExprAsStatement({self.expression})'
 
 class Print(Statement):
     '''
@@ -254,45 +287,72 @@ class Statements:
 
 # ------ Debugging function to convert a model into source code (for easier viewing)
 
-def to_source(node):
+def to_source(node, num_indent=0, curr_indent=0):
+
+    # !!! BUG
+    indent_sz = curr_indent*num_indent*'____'
+
     if isinstance(node, BinOp):
-        return f'{to_source(node.left)} {node.op} {to_source(node.right)}'
+        return indent_sz + \
+               f'{to_source(node.left)} {node.op} {to_source(node.right)}'
+
     elif isinstance(node, Integer):
         return node.value
+
     elif isinstance(node, Float):
         return node.value
+
     elif isinstance(node, UnaryOp):
         return f'{node.op}{to_source(node.operand)}'
+
     elif isinstance(node, DeclareConst):
-        return f'const {node.name} = {to_source(node.value)};\n'
+        return indent_sz + \
+               f'const {node.name} = {to_source(node.value)};\n'
+
     elif isinstance(node, DeclareVar):
-        return (f'var {node.name}' + \
+        return indent_sz + (f'var {node.name}' + \
             (f' {node.vartype}' if node.vartype else '') + \
             ((" = " + to_source(node.value)) if node.value else '') + \
             ";\n")
+
     elif isinstance(node, Assignment):
-        return f'{node.location} = {to_source(node.value)};\n'
+        return indent_sz + \
+               f'{node.location} = {to_source(node.value)};\n'
+
     elif isinstance(node, Load):
         return f'{node.location}'
+
     elif isinstance(node, IfStatement):
         return f'if {to_source(node.condition)}' + ' {\n' + \
                f'    {to_source(node.consequence)}' + \
                '} else {\n' + \
                f'    {to_source(node.alternative)}' + \
                '}'
+
+
+
     elif isinstance(node, WhileLoop):
-        return f'while {to_source(node.condition)}' + ' {\n' + \
-               f'    {to_source(node.body)}' + \
+        return indent_sz + \
+               f'while {to_source(node.condition)}' + ' {\n' + \
+               f'{to_source(node.body, num_indent=1, curr_indent=1)}' + \
                '}'
+
+
+
     elif isinstance(node, Compound):
         return '{ ' + \
                ''.join([to_source(s).rstrip() for s in node.statements.statements])  + ' }'
+
     elif isinstance(node, ExprAsStatement):
-        return f'{to_source(node.value)};'
+        return f'{to_source(node.expression)};'
+
     elif isinstance(node, Print):
-        return f'print {to_source(node.expression)};\n'
+        return indent_sz + \
+               f'print {to_source(node.expression)};\n'
+
     elif isinstance(node, Statements):
-        return ''.join([to_source(s) for s in node.statements])
+        return ''.join([to_source(s, num_indent=num_indent, curr_indent=curr_indent) for s in node.statements])
+
     else:
         raise RuntimeError(f"Can't convert {node} to source")
 

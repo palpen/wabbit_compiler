@@ -8,7 +8,7 @@
 # Reference: docs/WabbitScript.md
 #
 # The following conventions are used:
-# 
+#
 #       ALLCAPS       --> A token
 #       { symbols }   --> Zero or more repetitions of symbols
 #       [ symbols ]   --> Zero or one occurences of symbols (optional)
@@ -59,18 +59,18 @@
 #      | PLUS expr
 #      | MINUS expr
 #      | LNOT expr              (!)
-#      | LPAREN expr RPAREN 
+#      | LPAREN expr RPAREN
 #      | location
 #      | literal
-#      | LBRACE statements RBRACE 
-#       
+#      | LBRACE statements RBRACE
+#
 # literal : INTEGER
 #         | FLOAT
 #         | CHAR
 #         | TRUE
 #         | FALSE
-#         | LPAREN RPAREN   
-# 
+#         | LPAREN RPAREN
+#
 # location : NAME
 #
 # type      : NAME
@@ -78,7 +78,7 @@
 # empty     :
 # ======================================================================
 
-# How to proceed:  
+# How to proceed:
 #
 # At first glance, writing a parser might look daunting. The key is to
 # take it in tiny pieces.  Focus on one specific part of the language.
@@ -108,22 +108,150 @@
 #
 # If you are highly motivated and want to know how a parser works at a
 # low-level, you can write a hand-written recursive descent parser.
-# It is also fine to use high-level tools such as 
+# It is also fine to use high-level tools such as
 #
-#    - SLY (https://github.com/dabeaz/sly), 
+#    - SLY (https://github.com/dabeaz/sly),
 #    - PLY (https://github.com/dabeaz/ply),
 #    - ANTLR (https://www.antlr.org).
 
+from sly import Parser
 from .model import *
-from .tokenize import tokenize
+from .tokenize import *
 
-# Top-level function that runs everything    
+
+class WabbitParser(Parser):
+    debugfile = 'parser.out'
+
+    # Get list of tokens from tokenizer
+    tokens = Tokenizer.tokens
+
+    precedence = (
+        ('left', PLUS, MINUS),
+        ('left', TIMES, DIVIDE),
+    )
+
+    @_('statements statement')
+    def statements(self, p):
+        return p.statements + [p.statement]
+
+    @_('statement')
+    def statements(self, p):
+        return [p.statement]
+
+    @_('print_statement',
+       'assignment_statement',
+       'const_declare_statement',
+       'var_declare_statement',
+       'expr_statement')
+    def statement(self, p):
+        print(f"statement: {p[0]}")
+        return p[0]
+
+    @_('PRINT expr SEMI')
+    def print_statement(self, p):
+        print("Inside print_statement:", p.expr)
+        return Print(p.expr)
+
+    @_('expr SEMI')
+    def expr_statement(self, p):
+        return ExprAsStatement(p.expr)
+
+    @_('location ASSIGN expr SEMI')
+    def assignment_statement(self, p):
+        print(p.location, p.expr)
+        return Assignment(p.location, p.expr)
+
+    @_('VAR NAME ASSIGN expr SEMI')
+    def var_declare_statement(self, p):
+        return DeclareVar(p.NAME, None, p.expr)
+
+    @_('VAR NAME typ SEMI')
+    def var_declare_statement(self, p):
+        return DeclareVar(p.NAME, p.typ.name, None)
+
+    @_('VAR NAME typ ASSIGN expr SEMI')
+    def var_declare_statement(self, p):
+        type_name = p.typ.name
+        return DeclareVar(p.NAME, type_name, p.expr)
+
+    @_('CONST NAME ASSIGN expr SEMI')
+    def const_declare_statement(self, p):
+#        print(p[0], p[1], p[2], p[3], p[4])
+#        print(p.CONST, p.NAME, p.ASSIGN, p.expr, p.SEMI)
+        return DeclareConst(p.NAME, None, p.expr)
+
+
+# !!! BUG Does not work. Raises sytax error on token=TYP
+# !!! Ask Dave
+#    @_('CONST NAME typ ASSIGN expr SEMI')
+#    def const_declare_statement(self, p):
+#        print(f"const_declare_statement {p.expr}")
+#        return DeclareConst(p.NAME, p.typ, p.expr)
+
+    @_('expr PLUS expr',
+       'expr MINUS expr',
+       'expr TIMES expr',
+       'expr DIVIDE expr',
+       'expr LT expr',
+       'expr LE expr',
+       'expr GT expr',
+       'expr GE expr',
+       'expr EQ expr',
+       'expr NE expr',
+       'expr LAND expr',
+       'expr LOR expr')
+    def expr(self, p):
+        return BinOp(p[1], p.expr0, p.expr1)
+
+    @_('MINUS expr',
+       'PLUS expr')
+    def expr(self, p):
+        return UnaryOp(p[0], p.expr)
+
+    @_('location')
+    def expr(self, p):
+        return p.location
+
+    # !!! What is this ?
+    # Required, otherwise above methods results in infinite recursion
+    @_('literal')
+    def expr(self, p):
+        return p.literal
+
+    @_('NAME')
+    def literal(self, p):
+        return NameAsExpr(p.NAME)
+
+    @_('INTEGER')
+    def literal(self,p):
+        # p have attributes from the names in the decorator
+        # e.g.  'INTEGER in @_('INTEGER')
+        return Integer(p.INTEGER)
+
+    @_('FLOAT')
+    def literal(self, p):
+        return Float(p.FLOAT)
+
+    @_('NAME')
+    def location(self, p):
+        return p.NAME
+
+    @_('TYP')
+    def typ(self, p):
+        print(f"TYP {p[0]}")
+        return Type(p[0])
+
+
+# Top-level function that runs everything
 def parse_source(text):
     tokens = tokenize(text)
-    model = parse_tokens(tokens)     # You need to implement this part
-    return model
 
-# Example of a main program
+    # !!! DEBUG (will consume generator and cause an error)
+#    for tok in tokens:
+#        print(tok)
+    parser = WabbitParser()
+    return parser.parse(tokens)
+
 def parse_file(filename):
     with open(filename) as file:
         text = file.read()
@@ -133,7 +261,7 @@ if __name__ == '__main__':
     import sys
     if len(sys.argv) != 2:
         raise SystemExit('Usage: wabbit.parse filename')
-    model = parse(sys.argv[1])
+    model = parse_file(sys.argv[1])
     print(model)
 
 
