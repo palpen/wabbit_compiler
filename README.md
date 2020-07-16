@@ -140,3 +140,10 @@ Video recordings of live sessions will be posted here.
 * [Parser/Interpreter, Testing](https://vimeo.com/438721814/b260282922) (9 min)
 * [Project 5, Type Checking](https://vimeo.com/438722105/a425d0ab2c) (30 min)
 * [Type checking, end of day](https://vimeo.com/438723019/8db0ba43ca) (16 min)
+
+**Day 4**
+
+* [Code generation](https://vimeo.com/439082138/23c0131eea) (70 min)
+* [Code generation, discussion](https://vimeo.com/439084115/7f6c81a8f7) (32 min)
+* [Code generation, LLVM](https://vimeo.com/439084941/29b96d5488) (13 min)
+* [End of day, LLVM](https://vimeo.com/439085286/eade8dcab3) (16 min)
