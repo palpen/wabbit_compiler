@@ -142,14 +142,13 @@ class WabbitParser(Parser):
        'assignment_statement',
        'const_declare_statement',
        'var_declare_statement',
+       'if_statement',
        'expr_statement')
     def statement(self, p):
-        print(f"statement: {p[0]}")
         return p[0]
 
     @_('PRINT expr SEMI')
     def print_statement(self, p):
-        print("Inside print_statement:", p.expr)
         return Print(p.expr)
 
     @_('expr SEMI')
@@ -176,17 +175,19 @@ class WabbitParser(Parser):
 
     @_('CONST NAME ASSIGN expr SEMI')
     def const_declare_statement(self, p):
-#        print(p[0], p[1], p[2], p[3], p[4])
-#        print(p.CONST, p.NAME, p.ASSIGN, p.expr, p.SEMI)
         return DeclareConst(p.NAME, None, p.expr)
 
+    @_('CONST NAME typ ASSIGN expr SEMI')
+    def const_declare_statement(self, p):
+        return DeclareConst(p.NAME, p.typ.name, p.expr)
 
-# !!! BUG Does not work. Raises sytax error on token=TYP
-# !!! Ask Dave
-#    @_('CONST NAME typ ASSIGN expr SEMI')
-#    def const_declare_statement(self, p):
-#        print(f"const_declare_statement {p.expr}")
-#        return DeclareConst(p.NAME, p.typ, p.expr)
+    @_('IF expr LBRACE statements RBRACE')
+    def if_statement(self, p):
+        return IfStatement(p[1], p.statements, None)
+
+    @_('IF expr LBRACE statements RBRACE ELSE LBRACE statements RBRACE')
+    def if_statement(self, p):
+        return IfStatement(p[1], p[3], p[7])
 
     @_('expr PLUS expr',
        'expr MINUS expr',
@@ -238,7 +239,6 @@ class WabbitParser(Parser):
 
     @_('TYP')
     def typ(self, p):
-        print(f"TYP {p[0]}")
         return Type(p[0])
 
 
