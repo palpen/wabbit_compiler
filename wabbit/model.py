@@ -46,6 +46,8 @@
 # Feel free to modify as appropriate.  You don't even have to use classes
 # if you want to go in a different direction with it.
 
+from typing import List
+
 VALID_TYPES = {
     'int',
     'float',
@@ -145,10 +147,14 @@ class DeclareConst(Declaration):
         assert vartype is None or isinstance(vartype, str)
         assert isinstance(value, Expression)
         self.name = name
+        self.vartype = vartype
         self.value = value
 
     def __repr__(self):
-        return f'DeclareConst({self.name}, {self.value})'
+        if self.vartype and self.value:
+            return f'DeclareConst({self.name}, {self.vartype}, {self.value})'
+        elif not self.vartype:
+            return f'DeclareConst({self.name}, {self.value})'
 
 class DeclareVar(Declaration):
     '''
@@ -165,9 +171,9 @@ class DeclareVar(Declaration):
     def __repr__(self):
         if self.vartype and self.value:
             return f'DeclareVar({self.name}, {self.vartype}, {self.value})'
-        if not self.vartype:
+        elif not self.vartype:
             return f'DeclareVar({self.name}, {self.value})'
-        if not self.value:
+        elif not self.value:
             return f'DeclareVar({self.name}, {self.vartype})'
 
 class Assignment(Statement):
@@ -212,8 +218,8 @@ class IfStatement(Statement):
     '''
     def __init__(self, condition, consequence, alternative):
         assert isinstance(condition, Expression)
-        assert isinstance(consequence, Statement)
-        assert isinstance(alternative, Statement)
+        assert isinstance(consequence, List)
+        assert alternative is None or isinstance(alternative, List)
         self.condition = condition
         self.consequence = consequence
         self.alternative = alternative
@@ -352,6 +358,11 @@ def to_source(node, num_indent=0, curr_indent=0):
 
     elif isinstance(node, Statements):
         return ''.join([to_source(s, num_indent=num_indent, curr_indent=curr_indent) for s in node.statements])
+
+    elif isinstance(node, List):
+        # This is for cases where the node is a list of statements
+        # !!! FIX Super hacky bandaid solution
+        return ''.join([to_source(s, num_indent=num_indent, curr_indent=curr_indent) for s in node])
 
     else:
         raise RuntimeError(f"Can't convert {node} to source")
