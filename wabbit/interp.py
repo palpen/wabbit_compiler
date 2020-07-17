@@ -36,9 +36,7 @@
 # interpreter.  We're just trying to understand how things actually
 # work when a program runs.
 #
-# For testing, try running your interpreter on the models you
-# created in the example_models.py file.
-#
+# For testing, run interpret_program section of script_models.py
 
 from collections import ChainMap
 from .model import *
@@ -72,50 +70,6 @@ def interp(node, env):
         else:
             raise RuntimeError(f'Bad operator {op}')
 
-    elif isinstance(node, (DeclareConst, DeclareVar)):
-        # !!! Where to include node.vartype?
-        if node.value:
-            value = interp(node.value, env)
-        else:
-            value = None
-        env[node.name] = value
-
-    elif isinstance(node, Assignment):
-        if node.value:
-            value = interp(node.value, env)
-        else:
-            raise RuntimeError(f'Must assign a value to {name.location}')
-        for scope in env.maps:
-
-            # Check that variables has been declared
-            # before doing assignment
-            if node.location in scope:
-                scope[node.location] = value
-                break
-        else:
-            raise NameError(f"{node.location} needs to be declared")
-
-    elif isinstance(node, Load):
-        value = env[node.location]
-        return value
-
-    elif isinstance(node, IfStatement):
-        if interp(node.condition, env):
-            return interp(node.consequence, env.new_child())
-        else:
-            return interp(node.alternative, env.new_child())
-
-    elif isinstance(node, WhileLoop):
-        while interp(node.condition, env):
-            new_scope = env.new_child()
-            interp(node.body, new_scope)
-
-    elif isinstance(node, Compound):
-        return interp(node.statements, env.new_child())
-
-    elif isinstance(node, ExprAsStatement):
-       return interp(node.expression, env)
-
     elif isinstance(node, BinOp):
         leftval = interp(node.left, env)
         rightval = interp(node.right, env)
@@ -141,9 +95,53 @@ def interp(node, env):
         elif node.op == '!=':
             return leftval != rightval
 
+    elif isinstance(node, Load):
+        value = env[node.location]
+        return value
+
     elif isinstance(node, Print):
         print(interp(node.expression, env))
         return None
+
+    elif isinstance(node, Assignment):
+        if node.value:
+            value = interp(node.value, env)
+        else:
+            raise RuntimeError(f'Must assign a value to {name.location}')
+        for scope in env.maps:
+
+            # Check that variables has been declared
+            # before doing assignment
+            if node.location in scope:
+                scope[node.location] = value
+                break
+        else:
+            raise NameError(f"{node.location} needs to be declared")
+
+    elif isinstance(node, (DeclareConst, DeclareVar)):
+        # !!! Where to include node.vartype?
+        if node.value:
+            value = interp(node.value, env)
+        else:
+            value = None
+        env[node.name] = value
+
+    elif isinstance(node, IfStatement):
+        if interp(node.condition, env):
+            return interp(node.consequence, env.new_child())
+        else:
+            return interp(node.alternative, env.new_child())
+
+    elif isinstance(node, WhileLoop):
+        while interp(node.condition, env):
+            new_scope = env.new_child()
+            interp(node.body, new_scope)
+
+    elif isinstance(node, Compound):
+        return interp(node.statements, env.new_child())
+
+    elif isinstance(node, ExprAsStatement):
+       return interp(node.expression, env)
 
     elif isinstance(node, Statements):
         value = None
