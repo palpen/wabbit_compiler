@@ -47,7 +47,6 @@ class CheckContext:
         return ctx
 
     def error(self, msg):
-        print(msg)
         self._errors.append(msg)
 
     def have_errors(self):
@@ -58,7 +57,7 @@ class CheckContext:
 def check_program(model):
     ctx = CheckContext()
     check(model, ctx)
-    print("Returned context:", ctx.env)
+    # print("Returned context:", ctx.env)
     return ctx
     # Maybe return True/False if there are errors
 
@@ -161,24 +160,53 @@ def check(node, ctx):
                 # Type clash
                 ctx.error(f"Type mismatch in initialization")
 
-        current_scope = ctx.env.maps[0]  # current scope is always the first element
+        current_scope = ctx.env.maps[0]  # current scope is the 1st element
+        # print("DeclareVar current_scope",current_scope)
         if node.name in current_scope:
             ctx.error(f"Duplicate definition of {node.name}")
-        # store the entire node so we can
-        # check the value later when we load it
-        ctx.env[node.name] = node
-
-    elif isinstance(node, Load):
-        ...
+        else:
+            ctx.env[node.name] = node
 
     elif isinstance(node, Print):
-        ...
+        # print doesnt need to return anything because it is a statement
+        check(node.expression, ctx)
+
+    elif isinstance(node, Load):
+        # Returns the type of the variable to be loaded
+
+        # checks every scope in ctx.env
+        if node.location not in ctx.env:
+            ctx.error(f"Bad assignment (undefined name)")
+
+        if node.location in ctx.env:
+            declared_node = ctx.env[node.location]
+            node.type = declared_node.vartype  # For use later in assignment
+            return declared_node.vartype
 
     elif isinstance(node, Assignment):
-        ...
+
+        if node.location not in ctx.env:
+            ctx.error("Bad assignment (undefined name)")
+
+        # We do a loop because we want to use the variables
+        # in the most current scope first before using variables
+        # from a higher scope
+        for scope in ctx.env.maps:
+            if node.location in scope:
+                declared_node = scope[node.location]  # get node from scope
+                value_type = check(node.value, ctx)  # get type of value being asgn
+
+                if declared_node.vartype != value_type:
+                    ctx.error("Bad assignment (type error)")
+
+                if isinstance(declared_node, DeclareConst):
+                    ctx.error("Can't assign to const")
 
     elif isinstance(node, IfStatement):
-        ...
+        cond_val_type = check(node.condition, ctx)  # type (bec. expression)
+        # TODO Need to implement Bools to check cond_val_type is a bool
+        check(node.consequence, ctx)
+        check(node.alternative, ctx)
 
     else:
         raise RuntimeError(f"Cannot type check node {node}")

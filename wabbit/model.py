@@ -81,13 +81,6 @@ class Declaration(Statement):
     '''
     pass
 
-class NameAsExpr(Expression):
-    def __init__(self, name):
-        assert isinstance(name, str)
-        self.name = name
-    def __repr__(self):
-        return f'NameAsExpr({self.name})'
-
 class BinOp(Expression):
     '''
     Example: left + right

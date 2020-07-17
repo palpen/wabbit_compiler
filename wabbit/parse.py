@@ -157,7 +157,6 @@ class WabbitParser(Parser):
 
     @_('location ASSIGN expr SEMI')
     def assignment_statement(self, p):
-        print(p.location, p.expr)
         return Assignment(p.location, p.expr)
 
     @_('VAR NAME ASSIGN expr SEMI')
@@ -221,7 +220,7 @@ class WabbitParser(Parser):
 
     @_('NAME')
     def literal(self, p):
-        return NameAsExpr(p.NAME)
+        return Load(p.NAME)
 
     @_('INTEGER')
     def literal(self,p):
