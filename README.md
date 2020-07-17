@@ -94,7 +94,7 @@ The following links provide more information on specific project stages.
 * [Project 7 - Transformation](docs/Project7_Transformation.md)([video, 16 min](https://vimeo.com/438856187/7665385174))
 * [Project 8 - Compile to LLVM](docs/Project8_Generating_LLVM.md)
 * [Project 9 - Compile to WebAssembly](docs/Project9_Generating_WebAssembly.md)
-* [Project 10 - Functions](docs/Project10_Function_Calls.md)
+* [Project 10 - Functions](docs/Project10_Function_Calls.md)([video, 11 min](https://vimeo.com/439105748/3ff4b26e8a))
 * [Project 11 - Types! Types! Types!](docs/Project11_Types_Types_Types.md)
 
 ## Resources
