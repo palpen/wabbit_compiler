@@ -147,3 +147,9 @@ Video recordings of live sessions will be posted here.
 * [Code generation, discussion](https://vimeo.com/439084115/7f6c81a8f7) (32 min)
 * [Code generation, LLVM](https://vimeo.com/439084941/29b96d5488) (13 min)
 * [End of day, LLVM](https://vimeo.com/439085286/eade8dcab3) (16 min)
+
+**Day 5**
+
+* [Control flow/Functions](https://vimeo.com/439429574/757049f7e0) (34 min)
+* [Type Systems](https://vimeo.com/439430145/bfdf9c9ae2) (34 min)
+* [End of course discussion](https://vimeo.com/439430823/97233df495) (29 min)
