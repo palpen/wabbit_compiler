@@ -103,6 +103,7 @@ class Integer(Expression):
     def __init__(self, value):
         assert isinstance(value, str)
         self.value = value
+        self.type = 'int'
 
     def __repr__(self):
         return f'Integer({self.value})'
@@ -114,6 +115,7 @@ class Float(Expression):
     def __init__(self, value):
         assert isinstance(value, str)
         self.value = value
+        self.type = 'float'
 
     def __repr__(self):
         return f'Float({self.value})'
@@ -135,39 +137,39 @@ class DeclareConst(Declaration):
     '''
     Example: const pi = 3.14159
     '''
-    def __init__(self, name, vartype, value):
+    def __init__(self, name, type, value):
         assert isinstance(name, str)
-        assert vartype is None or isinstance(vartype, str)
+        assert type is None or isinstance(type, str)
         assert isinstance(value, Expression)
         self.name = name
-        self.vartype = vartype
+        self.type = type
         self.value = value
 
     def __repr__(self):
-        if self.vartype and self.value:
-            return f'DeclareConst({self.name}, {self.vartype}, {self.value})'
-        elif not self.vartype:
+        if self.type and self.value:
+            return f'DeclareConst({self.name}, {self.type}, {self.value})'
+        elif not self.type:
             return f'DeclareConst({self.name}, {self.value})'
 
 class DeclareVar(Declaration):
     '''
-    Example: var name vartype
+    Example: var name type
     '''
-    def __init__(self, name, vartype, value):
+    def __init__(self, name, type, value):
         assert isinstance(name, str)
-        assert vartype is None or isinstance(vartype, str)
+        assert type is None or isinstance(type, str)
         assert value is None or isinstance(value, Expression)
         self.name = name
-        self.vartype = vartype
+        self.type = type
         self.value = value
 
     def __repr__(self):
-        if self.vartype and self.value:
-            return f'DeclareVar({self.name}, {self.vartype}, {self.value})'
-        elif not self.vartype:
+        if self.type and self.value:
+            return f'DeclareVar({self.name}, {self.type}, {self.value})'
+        elif not self.type:
             return f'DeclareVar({self.name}, {self.value})'
         elif not self.value:
-            return f'DeclareVar({self.name}, {self.vartype})'
+            return f'DeclareVar({self.name}, {self.type})'
 
 class Assignment(Statement):
     '''
@@ -310,7 +312,7 @@ def to_source(node, num_indent=0, curr_indent=0):
 
     elif isinstance(node, DeclareVar):
         return indent_sz + (f'var {node.name}' + \
-            (f' {node.vartype}' if node.vartype else '') + \
+            (f' {node.type}' if node.type else '') + \
             ((" = " + to_source(node.value)) if node.value else '') + \
             ";\n")
 
