@@ -1,4 +1,5 @@
 *.out
+*.ll
 *.swp
 *.swo
 tags
