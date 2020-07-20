@@ -120,7 +120,7 @@ from .tokenize import *
 
 
 class WabbitParser(Parser):
-    debugfile = 'parser.out'
+#    debugfile = 'parser.out'
 
     # Get list of tokens from tokenizer
     tokens = Tokenizer.tokens
