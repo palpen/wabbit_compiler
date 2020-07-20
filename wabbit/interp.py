@@ -119,7 +119,7 @@ def interp(node, env):
             raise NameError(f"{node.location} needs to be declared")
 
     elif isinstance(node, (DeclareConst, DeclareVar)):
-        # !!! Where to include node.vartype?
+        # !!! Where to include node.type?
         if node.value:
             value = interp(node.value, env)
         else:
