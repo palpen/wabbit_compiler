@@ -154,9 +154,9 @@ def check(node, ctx):
         if node.value:
             value_type = check(node.value, ctx)
 
-            if node.vartype is None:
-                node.vartype = value_type
-            if node.vartype != value_type:
+            if node.type is None:
+                node.type = value_type
+            if node.type != value_type:
                 # Type clash
                 ctx.error(f"Type mismatch in initialization")
 
@@ -180,8 +180,8 @@ def check(node, ctx):
 
         if node.location in ctx.env:
             declared_node = ctx.env[node.location]
-            node.type = declared_node.vartype  # For use later in assignment
-            return declared_node.vartype
+            node.type = declared_node.type  # For use later in assignment
+            return declared_node.type
 
     elif isinstance(node, Assignment):
 
@@ -196,7 +196,7 @@ def check(node, ctx):
                 declared_node = scope[node.location]  # get node from scope
                 value_type = check(node.value, ctx)  # get type of value being asgn
 
-                if declared_node.vartype != value_type:
+                if declared_node.type != value_type:
                     ctx.error("Bad assignment (type error)")
 
                 if isinstance(declared_node, DeclareConst):
