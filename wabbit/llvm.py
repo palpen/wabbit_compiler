@@ -30,35 +30,85 @@
 #    def generate_expression(node, mod):
 #       ...
 #
-# In these functions, you will produce code by interacting with the 
+# In these functions, you will produce code by interacting with the
 # module in some way.
 #
 # One somewhat messy bit concerns the mapping of Wabbit types to
 # LLVM types. You'll probably want to make some type objects to help.
 # (see below)
 
+from collections import ChainMap
+
 from llvmlite import ir
+
 from .model import *
 
 # Define LLVM types corresponding to Wabbit types
 int_type = ir.IntType(32)
 float_type = ir.DoubleType()
-bool_type = ir.IntType(1)
-char_type = ir.IntType(8)
+void_type = ir.VoidType()
 
 # The LLVM world that Wabbit is populating
 class WabbitLLVMModule:
-    pass
+    def __init__(self):
+
+        # Boilerplate code to setup llvlite to write LLVM code
+        self.module = ir.Module("wabbit")
+        self.function = ir.Function(self.module,
+                                    ir.FunctionType(void_type, []),
+                                    name='main_block')
+        self.block = self.function.append_basic_block('entry')
+        self.builder = ir.IRBuilder(self.block)
+
+        # Runtime functions for printing. See wabbit/runtime.c.
+        self._printi = ir.Function(
+            self.module,
+            ir.FunctionType(void_type, [int_type]),
+            name='_printi')
+
+        self._printf = ir.Function(
+            self.module,
+            ir.FunctionType(void_type, [float_type]),
+            name='_printf')
+
+        # Environment
+        self.env = ChainMap()
+
+    def gettype(self, node):
+        return node.type
 
 # Top-level function
-def generate_program(model):
+def generate_program(model, write_out=False):
     mod = WabbitLLVMModule()
-    generate(model, mod)
-    return mod
+    code = g(model, mod)
+    mod.builder.ret_void()  # closes the block in LLVM
+
+    if write_out:
+        with open('out.ll', 'w') as file:
+            file.write(str(mod.module))
+        print('Wrote out.ll')
+    return mod.module
 
 # Internal function to to generate code for each node type
-def generate(node, mod):
-    raise RuntimeError(f"Can't generate code for {node}")
+def g(node, mod):
+    if isinstance(node, list):
+        for stmt in node:
+            code = g(stmt, mod)
+        return None
+
+    elif isinstance(node, Integer):
+        return ir.Constant(int_type, int(node.value))
+
+    elif isinstance(node, Print):
+        node_type = mod.gettype(node.expression)
+        value = g(node.expression, mod)
+
+#        print(f"Node type and value: {node_type}, {value}")
+        if node_type == 'int':
+            return mod.builder.call(mod._printi, [value])
+
+    else:
+        raise RuntimeError(f"Can't generate code for {node}")
 
 # Sample main program that runs the compiler
 def main(filename):
@@ -66,7 +116,7 @@ def main(filename):
     from .typecheck import check_program
 
     model = parse_file(filename)
-    check_program(model):
+    check_program(model)
     mod = generate_program(model)
     with open('out.ll', 'w') as file:
         file.write(str(mod))
