@@ -132,6 +132,7 @@ def check(node, ctx):
     elif isinstance(node, UnaryOp):
         operand_type = check(node.operand, ctx)
         result_type = _unaryops.get((node.op, operand_type))
+        node.type = result_type
 
         if not result_type:
             ctx.error(f'Type error {node.op}{operand_type}')
@@ -144,6 +145,9 @@ def check(node, ctx):
 
         # Use `get` method to return None if key is not in table
         result_type = _binops.get((left_type, node.op, right_type))
+
+        # Attach the resulting type to the BinOp object
+        node.type = result_type
 
         if not result_type:
             ctx.error(f"Type error ({left_type} {node.op} {right_type})")

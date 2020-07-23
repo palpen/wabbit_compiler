@@ -50,5 +50,13 @@ def test_example1():
       ret i32 %".8"
     }
     """
+    source = """
+        print 1 + 3;
+        print 2 * 3;
+        print 4 / 2;
+        print 4 - 2;
+        print 4 - 5;
+        print -3 * 5;
+    """
     run(source, out)
 

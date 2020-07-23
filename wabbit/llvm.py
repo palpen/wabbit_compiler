@@ -102,10 +102,24 @@ def g(node, mod):
     elif isinstance(node, Print):
         node_type = mod.gettype(node.expression)
         value = g(node.expression, mod)
-
-#        print(f"Node type and value: {node_type}, {value}")
         if node_type == 'int':
             return mod.builder.call(mod._printi, [value])
+
+    elif isinstance(node, BinOp):
+        leftval = g(node.left, mod)
+        rightval = g(node.right, mod)
+
+        lefttype = mod.gettype(node.left)
+        if lefttype in {'int'}:
+            if node.op == '+':
+                return mod.builder.add(leftval, rightval)
+            if node.op == '-':
+                return mod.builder.sub(leftval, rightval)
+            if node.op == '*':
+                return mod.builder.mul(leftval, rightval)
+            if node.op == '/':
+                return mod.builder.sdiv(leftval, rightval)
+
 
     else:
         raise RuntimeError(f"Can't generate code for {node}")
