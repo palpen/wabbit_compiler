@@ -11,7 +11,7 @@
 # (useful if making a new language).  Finally, in getting
 # your compiler to actually "work", there may be certain runtime
 # elements that are quite hard to implement or debug directly with machine
-# instructions. Therefore, it might be easier to implement things in C 
+# instructions. Therefore, it might be easier to implement things in C
 # as a first step.
 #
 # As a preliminary step, please read the short C tutorial in
@@ -19,11 +19,11 @@
 #    docs/C-Programming-Tutorial.md
 #
 # Come back here when you've looked it over.  Our goal is to produce
-# low-level C code where you are ONLY allowed to use the 
+# low-level C code where you are ONLY allowed to use the
 # the following C features:
 #
 # 1. You can only declare uninitialized variables.  For example:
-# 
+#
 #         int x;
 #         float y;
 #         int z = 2 + 3;     // NO!!!!!!!!
@@ -42,7 +42,7 @@
 #         _i1 = 3 * 4;
 #         _i2 = 2 + i1;
 #
-# 3. The only allowed control flow constucts are the following two 
+# 3. The only allowed control flow constucts are the following two
 #    statements:
 #
 #        goto Label;
@@ -51,8 +51,8 @@
 #        Label:
 #           ... code ...
 #
-#    No, you don't get "else". And you also don't get code blocks 
-#    enclosed in braces { }. 
+#    No, you don't get "else". And you also don't get code blocks
+#    enclosed in braces { }.
 #
 # 4. You may print things with printf().
 #
@@ -76,7 +76,7 @@
 #
 #    #include <stdio.h>
 #
-#    int result;       
+#    int result;
 #    int n;
 #
 #    int main() {
@@ -100,7 +100,7 @@
 #    L3:
 #        return 0;
 #    }
-#         
+#
 # One thing to keep in mind... the goal is NOT to produce code for
 # humans to read.  Instead, it's to produce code that is minimal and
 # which can be reasoned about. There is very little actually happening
@@ -131,17 +131,56 @@
 
 from .model import *
 
+counter = 0
+def make_temporary_name():
+    global counter
+    return counter + 1
+
 # Top-level function to handle an entire program.
 def compile_program(model):
-    # ... you define ...
-    pass
+    ...
+
+# Internal function to interpret a node in the environment
+def compile(node, env):
+    # !!! Use interp.py as a template
+
+    # TEMPLATE
+    if isinstance(node, Print):
+	# What is this value?
+        # Problem: value.
+        # "value" is name of a place / literal
+        # Solution: Put the results as a string
+        value = compile(node.expression, env, code)
+
+	# Must generate code to do print
+	value_type = typeof(value) # wishful thinking (what is this?)
+	# Get from type checker!
+
+	if value_type = 'int':
+		stmt = f'printf("%i\\n", {value});\n'
+	if value_type = 'float':
+		stmt = f'printf("%f\\n", {value});\n'
+	if value_type = 'char':
+		stmt = f'printf("%c", {value});\n'
+
+        tempname = make_temporary_name()
+	code.statements.append(code)
+	# Problem: Output code ... maybe like the environment
+	# Issue: where does this code go?
+
+	return tempname # the place where you put the value?
+        # why do we care about this?? (because it will be used in subsequent scripts!)
+
+    else:
+        raise RuntimeError(f"Can't interpret {node}")
+
 
 def main(filename):
     from .parse import parse_file
     from .typecheck import check_program
 
     model = parse_file(filename)
-    check_program(model)
+    check_program(model)  # !!! TODO Type checking needs to be implemented
     code = compile_program(model)
     with open('out.c', 'w') as file:
         file.write(code)

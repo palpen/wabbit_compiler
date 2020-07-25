@@ -23,6 +23,7 @@
 from wabbit.model import *
 from wabbit.interp import *
 from wabbit.parse import *
+from wabbit.tokenize import *
 
 
 
@@ -101,8 +102,8 @@ model3 = Statements([
     IfStatement(BinOp('<',
                       Load('a'),
                       Load('b')),
-                Print(Load('b')),
-                Print(Load('a')))
+                [Print(Load('b'))],
+                [Print(Load('a'))])
 ])
 
 
@@ -120,7 +121,6 @@ source4 = '''
         x = x + 1;
     }
 '''
-
 model4 = Statements([
     DeclareConst('n', None, Integer("10")),
     DeclareVar('x', 'int', Integer("1")),
@@ -168,25 +168,71 @@ model5 = Statements([
 
 ## Tests
 
-source = "print 6;"
-print(parse_source(source))
+def print_tokenz(text):
+    for tok in tokenize(text):
+        print(tok)
 
+#source = "haha = 6;"
+#source = "print 6.0;"
+#source = "print 1+1;"
+#source = "print haha;"
+#source = "x = 4;"
+#source = "var x int;"
+#source = "const x int = 5; const x = 5;"
+
+#print_tokenz(source)
+#print(parse_source(source))
+
+#print(source1)
+#print(source2)
+#print(source3)
+#print(source4)
+#print(source5)
 
 #print(to_source(expr_model))
-#print(interpret_program(expr_model))
 #print(to_source(model1))
-#print("Output:\n", interpret_program(model1), '\n')
 #print(to_source(model2))
-#print("Output:\n", interpret_program(model2), '\n')
 #print(to_source(model3))
-#print("Output:\n", interpret_program(model3), '\n')
 #print(to_source(model4))
-#print("Output:\n", interpret_program(model4), '\n')
 #print(to_source(model5))
-#print("Output:\n", interpret_program(model5), '\n')
+
+#print(interpret_program(expr_model))
+#print(interpret_program(model1))
+#print(interpret_program(model2))
+#print(interpret_program(model3))
+#print(interpret_program(model4))
+#print(interpret_program(model5))
+
+#print_tokenz(source1)
+#print_tokenz(source2)
+#print_tokenz(source3)
+#print_tokenz(source4)
+#print_tokenz(source5)
+
+print(parse_source(source1))
+print(parse_source(source2))
+print(parse_source(source3))
+#print(parse_source(source4))  # TODO implement while
+#print(parse_source(source5))  # TODO implement compound expression
+
+
+
 
 
 # ----------------------------------------------------------------------
 # What's next?  If you've made it here are are looking for more,
 # proceed to the file "func_models.py" and continue.
+
+
+
+
+
+
+
+
+
+
+
+
+
 
