@@ -104,7 +104,11 @@ def g(node, mod):
 
 
     elif isinstance(node, UnaryOp):
-        ...
+#        node.op
+#        node.operand
+#        if node.type
+#        if node.op == '-':
+
 
 
 
