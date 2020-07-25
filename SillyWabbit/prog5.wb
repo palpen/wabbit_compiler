@@ -57,13 +57,12 @@ struct Quadratic {
 }
 
 func quad_eq(q Quadratic) MaybeFloat {
-    var term1 = q.b*q.b;
-    var term2 = 4.0 * q.a * q.c;
-    var sqrt_arg = term1 - term2;
-    var sqrt_val = sqrt(sqrt_arg);
+    var _sqrt_val = sqrt(q.b**2 - 4.0 * q.a * q.c);
 
-    x = (-q.b + sqrt_val)/(2.0*q.a);
-    return MaybeFloat::Yes(x);
+    return match _sqrt_val {
+        No => _sqrt_val;
+        Yes(val) => MaybeFloat::Yes((-q.b + val)/(2.0 * q.a));
+    };
 }
 
 
