@@ -99,6 +99,17 @@ def g(node, mod):
     elif isinstance(node, Integer):
         return ir.Constant(int_type, int(node.value))
 
+
+
+
+
+    elif isinstance(node, UnaryOp):
+        ...
+
+
+
+
+
     elif isinstance(node, Print):
         node_type = mod.gettype(node.expression)
         value = g(node.expression, mod)
@@ -139,6 +150,4 @@ def main(filename):
 if __name__ == '__main__':
     import sys
     main(sys.argv[1])
-
-
 
