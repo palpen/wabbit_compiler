@@ -48,14 +48,16 @@ def interpret_program(model):
     # Make the initial environment (a dict)
     env = ChainMap()
     out = interp(model, env)
-    print("env content:", env)
     return out
 
 # Internal function to interpret a node in the environment
 def interp(node, env):
+    if isinstance(node, list):
+        for stmt in node:
+            code = interp(stmt, env)
+        return None
 
-    # Expand to check for different node types
-    if isinstance(node, Integer):
+    elif isinstance(node, Integer):
         return int(node.value)
 
     elif isinstance(node, Float):
