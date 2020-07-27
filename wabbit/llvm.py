@@ -48,6 +48,12 @@ int_type = ir.IntType(32)
 float_type = ir.DoubleType()
 void_type = ir.VoidType()
 
+# Maps python types to LLVM types
+_typemap = {
+    'int': int_type,
+    'float': float_type
+}
+
 # The LLVM world that Wabbit is populating
 class WabbitLLVMModule:
     def __init__(self):
@@ -77,6 +83,9 @@ class WabbitLLVMModule:
     def gettype(self, node):
         return node.type
 
+    def getllvmtype(self, ptype):
+        return _typemap[ptype]
+
 # Top-level function
 def generate_program(model, write_out=False):
     mod = WabbitLLVMModule()
@@ -99,32 +108,38 @@ def g(node, mod):
     elif isinstance(node, Integer):
         return ir.Constant(int_type, int(node.value))
 
-
-
-
+    elif isinstance(node, Float):
+        return ir.Constant(float_type, float(node.value))
 
     elif isinstance(node, UnaryOp):
-#        node.op
-#        node.operand
-#        if node.type
-#        if node.op == '-':
+        nodetype = node.type
+        llvmtype = mod.getllvmtype(nodetype)
+        operand = g(node.operand, mod)
+        op = node.op
 
+        if nodetype == 'int':
+            if op == '-':
+                return mod.builder.sub(ir.Constant(llvmtype, 0), operand)
 
-
-
-
+        elif nodetype == 'float':
+            if op == '-':
+                return mod.builder.fsub(ir.Constant(llvmtype, 0), operand)
 
     elif isinstance(node, Print):
         node_type = mod.gettype(node.expression)
         value = g(node.expression, mod)
         if node_type == 'int':
             return mod.builder.call(mod._printi, [value])
+        elif node_type == 'float':
+            return mod.builder.call(mod._printf, [value])
+        else:
+            raise RuntimeError(f"Cannot print expression {node}")
 
     elif isinstance(node, BinOp):
         leftval = g(node.left, mod)
         rightval = g(node.right, mod)
-
         lefttype = mod.gettype(node.left)
+
         if lefttype in {'int'}:
             if node.op == '+':
                 return mod.builder.add(leftval, rightval)
@@ -134,6 +149,18 @@ def g(node, mod):
                 return mod.builder.mul(leftval, rightval)
             if node.op == '/':
                 return mod.builder.sdiv(leftval, rightval)
+
+        elif lefttype in {'float'}:
+            if node.op == '+':
+                return mod.builder.fadd(leftval, rightval)
+            if node.op == '-':
+                return mod.builder.fsub(leftval, rightval)
+            if node.op == '*':
+                return mod.builder.fmul(leftval, rightval)
+            if node.op == '/':
+                return mod.builder.fdiv(leftval, rightval)
+        else:
+            raise RuntimeError(f"Cannot evaluate BinOp operator {node}")
 
 
     else:
