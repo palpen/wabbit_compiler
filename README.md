@@ -20,11 +20,11 @@ To test the compiler, do `./compile_tests.sh`
 
 To add a new feature
 
-    * Add the data model for the feature in `wabbit/model.py`
-    * Add support for the feature in
-        * `wabbit/interp.py`
-        * `wabbit/tokenize.py`
-        * `wabbit/parse.py`
-        * `wabbit/typecheck.py`
-        * `wabbit/llvm.py`
+* Add the data model for the feature in `wabbit/model.py`
+* Add support for the feature in
+    * `wabbit/interp.py`
+    * `wabbit/tokenize.py`
+    * `wabbit/parse.py`
+    * `wabbit/typecheck.py`
+    * `wabbit/llvm.py`
 
