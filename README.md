@@ -10,7 +10,7 @@ Features that need to be implemented
 - [] Boolean and character types
 - [] Compound statements
 
-The goal is to be able to plot the Mandelbrot set by compiling the Wabbit code [here](https://github.com/dabeaz-course/compilers_2020_07/blob/dabeaz/tests/Script/mandel_loop.wb) in LLVM.
+The goal is to be able to plot the Mandelbrot set by compiling the Wabbit code [here](https://github.com/dabeaz-course/compilers_2020_07/blob/dabeaz/tests/Script/mandel_loop.wb) to LLVM.
 
 ### Testing the compiler
 
@@ -19,6 +19,7 @@ To test the compiler, do `./compile_tests.sh`
 ### Adding new features
 
 To add a new feature
+
     * Add the data model for the feature in `wabbit/model.py`
     * Add support for the feature in
         * `wabbit/interp.py`
