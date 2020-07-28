@@ -162,6 +162,20 @@ def g(node, mod):
         else:
             raise RuntimeError(f"Cannot evaluate BinOp operator {node}")
 
+    elif isinstance(node, (DeclareConst, DeclareVar)):
+        nodetype = mod.gettype(node)
+
+        # Declare variable with name, node.name
+        var = mod.builder.alloca(int_type, name=node.name)
+
+        if nodetype == 'int':
+            if node.value:
+                value = g(node.value, mod)
+                mod.builder.store(value, var)
+        mod.env[node.name] = var  # Store variable in environment
+
+    elif isinstance(node, Load):
+        return mod.builder.load(mod.env[node.location])
 
     else:
         raise RuntimeError(f"Can't generate code for {node}")
