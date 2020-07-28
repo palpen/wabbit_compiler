@@ -50,3 +50,10 @@ def test_vardeclaration():
     """
     run(source)
 
+def test_vardeclaration2():
+    source = """
+        var x int = 4.;
+        var y int = 5.;
+        print x + y;
+    """
+    # run(source)
