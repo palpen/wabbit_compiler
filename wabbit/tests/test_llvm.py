@@ -52,8 +52,16 @@ def test_vardeclaration():
 
 def test_vardeclaration2():
     source = """
-        var x int = 4.;
-        var y int = 5.;
+        const x int = 5;
+        const y int = 5;
         print x + y;
     """
-    # run(source)
+    run(source)
+
+def test_vardeclaration3():
+    source = """
+        const x float = 5.2;
+        const y float = 5.3;
+        print x + y;
+    """
+    run(source)
