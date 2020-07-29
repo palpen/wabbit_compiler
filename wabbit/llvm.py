@@ -163,15 +163,16 @@ def g(node, mod):
             raise RuntimeError(f"Cannot evaluate BinOp operator {node}")
 
     elif isinstance(node, (DeclareConst, DeclareVar)):
+        # Get node type and llvm type
         nodetype = mod.gettype(node)
+        llvmtype = mod.getllvmtype(nodetype)
 
         # Declare variable with name, node.name
-        var = mod.builder.alloca(int_type, name=node.name)
+        var = mod.builder.alloca(llvmtype, name=node.name)
 
-        if nodetype == 'int':
-            if node.value:
-                value = g(node.value, mod)
-                mod.builder.store(value, var)
+        if node.value:
+            value = g(node.value, mod)
+            mod.builder.store(value, var)
         mod.env[node.name] = var  # Store variable in environment
 
     elif isinstance(node, Load):
